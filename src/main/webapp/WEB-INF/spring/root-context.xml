@@ -14,8 +14,8 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE" />
-		<property name="username" value="douzone" />
+			value="jdbc:log4jdbc:oracle:thin:@ftss9364.synology.me:49167:XE" />
+		<property name="username" value="douzon" />
 		<property name="password" value="1234" />
 	</bean>
 
