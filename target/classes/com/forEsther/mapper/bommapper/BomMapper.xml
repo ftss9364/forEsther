@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forEsther.mapper.bommapper.BomMapper">
+
+	<!-- <select id="getList" resultType="com.forEsther.vo.bomvo.BomVO">
+  		select * from tbl_bom
+  	</select> -->
+
+	
+  	<resultMap type="com.forEsther.vo.itemvo.ItemVO" id="ItemVO">
+  		<result column="item_name" property="item_name"/>
+  	</resultMap>
+
+  	<resultMap type="com.forEsther.vo.bomregistrationvo.BomRegistrationVO" id="BomRegistrationVO">
+  		<result column="bom_registration_code" property="bom_registration_code"/>
+  		<result column="bom_code" property="bom_code"/>
+  		<result column="item_code" property="item_code"/>
+  		<result column="required_quantity" property="required_quantity"/>
+  		<collection property="item_vo" resultMap="ItemVO"/>
+  	</resultMap>
+  	
+  	<resultMap type="com.forEsther.vo.bomvo.BomVO" id="BomVO">
+  		<result column="bom_code" property="bom_code"/>
+  		<result column="product_name" property="product_name"/>
+  		<collection property="bom_register_vo" resultMap="BomRegistrationVO"/>
+  	</resultMap>
+  	
+  	<select id="getList" resultMap="BomVO">
+  		select b.bom_code, b.product_name, br.bom_registration_code, 
+    		br.item_code, i.item_name
+    	from tbl_bom_registration br , tbl_bom b , tbl_items i
+		where br.bom_code = b.bom_code and br.item_code = i.item_code
+		ORDER BY bom_registration_code
+  	</select>
+
+</mapper>
