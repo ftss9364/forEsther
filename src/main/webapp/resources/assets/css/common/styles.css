@@ -1,0 +1,24 @@
+/* 기존 CSS 수정 */
+
+
+/* 새로운 CSS 추가 */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-title {
+  margin: 14px 0;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.test-ui-bg {
+  padding: 10px;
+  background-color: rgb(245, 245, 249);
+}
+
+.test-ui-container {
+  width: 50%;
+}
