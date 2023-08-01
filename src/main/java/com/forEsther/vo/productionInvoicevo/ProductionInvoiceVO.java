@@ -4,10 +4,10 @@ import java.util.Date;
 
 import lombok.Data;
 
-//»ı»êÀüÇ¥
+//ìƒì‚°ì „í‘œ
 @Data
 public class ProductionInvoiceVO { 
-    private String production_plan_code; //»ı»êÃ³¸®°èÈ¹¼­ÄÚµå (-> ProductionPlanVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private String employee_id; //»ç¹ø (-> UserVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private Date invoice_issuance_date; //»ı»êÀüÇ¥¹ß±ŞÀÏÀÚ
+    private String production_plan_code; //ìƒì‚°ì²˜ë¦¬ê³„íšì„œì½”ë“œ (-> ProductionPlanVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private String employee_id; //ì‚¬ë²ˆ (-> UserVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private Date invoice_issuance_date; //ìƒì‚°ì „í‘œë°œê¸‰ì¼ì
 }

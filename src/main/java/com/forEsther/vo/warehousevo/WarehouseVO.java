@@ -2,13 +2,13 @@ package com.forEsther.vo.warehousevo;
 
 import lombok.Data;
 
-//Áö¿ªÃ¢°í
+//ì§€ì—­ì°½ê³ 
 
 @Data
 public class WarehouseVO {
-    private String warehouse_code; //Áö¿ªÃ¢°íÄÚµå
-    private String address; //ÁÖ¼Ò
-    private String warehouse_manager; //´ã´çÀÚ
-    private String contact; //¿¬¶ôÃ³
-    private String area_of_responsibility; //´ã´çÁö¿ª
+    private String warehouse_code; //ì§€ì—­ì°½ê³ ì½”ë“œ
+    private String address; //ì£¼ì†Œ
+    private String warehouse_manager; //ë‹´ë‹¹ì
+    private String contact; //ì—°ë½ì²˜
+    private String area_of_responsibility; //ë‹´ë‹¹ì§€ì—­
 }

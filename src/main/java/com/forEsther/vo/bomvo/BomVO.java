@@ -5,6 +5,6 @@ import lombok.Data;
 //BOM
 @Data
 public class BomVO { 
-    private String bom_code; //BOMΔΪµε
-    private String product_name; //Α¦Η°Έν (-> ItemVO °΄ΓΌΏ΅Ό­ ΉήΎΖΏΓ ΏΉΑ¤)
+    private String bom_code; //BOMμ½”λ“
+    private String product_name; //μ ν’λª… (-> ItemVO κ°μ²΄μ—μ„ λ°›μ•„μ¬ μμ •)
 }

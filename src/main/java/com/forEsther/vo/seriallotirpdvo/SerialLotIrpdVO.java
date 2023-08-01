@@ -2,16 +2,16 @@ package com.forEsther.vo.seriallotirpdvo;
 
 import lombok.Data;
 
-//½Ã¸®¾ó·ÎÆ® Àç°í¼öºÒºÎ
+//ì‹œë¦¬ì–¼ë¡œíŠ¸ ì¬ê³ ìˆ˜ë¶ˆë¶€
 
 @Data
 public class SerialLotIrpdVO {
-    private String serial_lot_irpd_code; //Àç°í¼öºÒºÎÄÚµå
-    private String serial_lot_code;  //½Ã¸®¾ó·ÎÆ®ÄÚµå  - ½Ã¸®¾ó·ÎÆ® FK
-    private String item_name;  //Ç°¸ñ¸í
-    private String irpd_category;  //¼öºÒ±¸ºĞ(ÀÔ°í, Ãâ°í)
-    private int variation_quantity; //º¯µ¿ ¼ö·®
-    private int stock_quantity;  //Àç°í ¼ö·®
-    private String related_invoice; // ¿¬°áÀüÇ¥
-    private String customer_name; //°Å·¡Ã³¸í
+    private String serial_lot_irpd_code; //ì¬ê³ ìˆ˜ë¶ˆë¶€ì½”ë“œ
+    private String serial_lot_code;  //ì‹œë¦¬ì–¼ë¡œíŠ¸ì½”ë“œ
+    private String item_name;  //í’ˆëª©ëª…
+    private String irpd_category;  //ìˆ˜ë¶ˆêµ¬ë¶„(ì…ê³ , ì¶œê³ )
+    private int variation_quantity; //ë³€ë™ ìˆ˜ëŸ‰
+    private int stock_quantity;  //ì¬ê³  ìˆ˜ëŸ‰
+    private String related_invoice; // ì—°ê²°ì „í‘œ
+    private String customer_name; //ê±°ë˜ì²˜ëª…
 }
