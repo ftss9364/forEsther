@@ -2,14 +2,14 @@ package com.forEsther.vo.productionplanitemvo;
 
 import lombok.Data;
 
-//»ı»ê°èÈ¹Ç×¸ñ
+//ìƒì‚°ê³„íší•­ëª©
 
 @Data
 public class ProductionPlanItemVO {
-    private String production_plan_item_code; //»ı»ê°èÈ¹Ç×¸ñÄÚµå
-    private String item_code; //Ç°¸ñÄÚµå  Ç°¸ñ FK
-    private String production_plan_code;  //»ı»êÃ³¸®°èÈ¹¼­ÄÚµå  »ı»êÃ³¸®°èÈ¹¼­FK
-    private String product_name;  //Á¦Ç°¸í
-    private String bom_code;  //bom ÄÚµå
-    private int scheduled_quantity;  //»ı»ê¿¹Á¤¼ö·®
+    private String production_plan_item_code; //ìƒì‚°ê³„íší•­ëª©ì½”ë“œ
+    private String item_code; //í’ˆëª©ì½”ë“œ
+    private String production_plan_code;  //ìƒì‚°ì²˜ë¦¬ê³„íšì„œì½”ë“œ
+    private String product_name;  //ì œí’ˆëª…
+    private String bom_code;  //bom ì½”ë“œ
+    private int scheduled_quantity;  //ìƒì‚°ì˜ˆì •ìˆ˜ëŸ‰
 }

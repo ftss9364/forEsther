@@ -2,14 +2,14 @@ package com.forEsther.vo.uservo;
 
 import lombok.Data;
 
-//»ç¿ëÀÚ
+//ì‚¬ìš©ì
 
 @Data
 public class UserVO {
-    private String employee_id; //»ç¹ø
-    private String user_name;  //ÀÌ¸§
-    private String contact;  //¿¬¶ôÃ³
-    private String user_position; //Á÷Ã¥
-    private String department;  //ºÎ¼­
-    private String user_password; //ºñ¹Ğ¹øÈ£
+    private String employee_id; //ì‚¬ë²ˆ
+    private String user_name;  //ì´ë¦„
+    private String contact;  //ì—°ë½ì²˜
+    private String user_position; //ì§ì±…
+    private String department;  //ë¶€ì„œ
+    private String user_password; //ë¹„ë°€ë²ˆí˜¸
 }

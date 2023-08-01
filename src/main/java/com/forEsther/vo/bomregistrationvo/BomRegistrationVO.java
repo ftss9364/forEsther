@@ -2,11 +2,11 @@ package com.forEsther.vo.bomregistrationvo;
 
 import lombok.Data;
 
-//BOM µî·Ï
+//BOM ë“±ë¡
 @Data
 public class BomRegistrationVO { 
-    private String bom_registration_code; //BOMµî·ÏÄÚµå
-    private String bom_code; //BOMÄÚµå (-> BomVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private String item_code; //Ç°¸ñÄÚµå (-> ItemVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private int required_quantity; //¿øÀç·á ÇÊ¿ä¼ö·®
+    private String bom_registration_code; //BOMë“±ë¡ì½”ë“œ
+    private String bom_code; //BOMì½”ë“œ (-> BomVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private String item_code; //í’ˆëª©ì½”ë“œ (-> ItemVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private int required_quantity; //ì›ì¬ë£Œ í•„ìš”ìˆ˜ëŸ‰
 }
