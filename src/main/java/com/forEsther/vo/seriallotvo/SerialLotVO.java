@@ -4,16 +4,16 @@ import java.util.Date;
 
 
 import lombok.Data;
-// ½Ã¸®¾ó·ÎÆ®
+// ì‹œë¦¬ì–¼ë¡œíŠ¸
 @Data
 public class SerialLotVO {
-    private String serial_lot_code; // ½Ã¸®¾ó ·ÎÆ® ÄÚµå
-    private String item_code; // Ç°¸ñÄÚµå (-> ItemVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private Date registration_date; // ÀÏÀÚ (µî·ÏÀÏÀÚ)
-    private String item_name; // Ç°¸ñ¸í (-> ItemVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private Date expiration_date; // À¯Åë±âÇÑ (ÇØ´ç °´Ã¼¿¡¼­ Á÷Á¢ ÁöÁ¤)
-    private int stock_quantity; // Àç°í¼ö·®
-    private String supplier; // ±¸¸ÅÃ³ (-> SupplierVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private String related_invoice; // ¿¬°áÀüÇ¥
+    private String serial_lot_code; // ì‹œë¦¬ì–¼ ë¡œíŠ¸ ì½”ë“œ
+    private String item_code; // í’ˆëª©ì½”ë“œ (-> ItemVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private Date registration_date; // ì¼ì (ë“±ë¡ì¼ì)
+    private String item_name; // í’ˆëª©ëª… (-> ItemVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private Date expiration_date; // ìœ í†µê¸°í•œ (í•´ë‹¹ ê°ì²´ì—ì„œ ì§ì ‘ ì§€ì •)
+    private int stock_quantity; // ì¬ê³ ìˆ˜ëŸ‰
+    private String supplier; // êµ¬ë§¤ì²˜ (-> SupplierVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private String related_invoice; // ì—°ê²°ì „í‘œ
     
 }

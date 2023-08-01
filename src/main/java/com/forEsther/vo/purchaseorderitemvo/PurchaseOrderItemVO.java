@@ -2,16 +2,16 @@ package com.forEsther.vo.purchaseorderitemvo;
 
 import lombok.Data;
 
-//¹ßÁÖ°èÈ¹Ç×¸ñ
+//ë°œì£¼ê³„íší•­ëª©
 
 @Data
 public class PurchaseOrderItemVO {
-    private String purchase_order_item_code; //¹ßÁÖ°èÈ¹Ç×¸ñÄÚµå
-    private String item_code;  //Ç°¸ñÄÚµå  Ç°¸ñ FK
-    private String plan_of_purchase_orders_code; //¹ßÁÖ°èÈ¹¼­¹øÈ£  ¹ßÁÖ°èÈ¹¼­ FK
-    private String supplier; //±¸¸ÅÃ³
-    private String item_name; //Ç°¸ñ¸í
-    private int order_quantity;  //¹ßÁÖ¼ö·®
-    private String item_specification;  //±Ô°İ
-    private int purchase_price;  //±¸¸Å´Ü°¡
+    private String purchase_order_item_code; //ë°œì£¼ê³„íší•­ëª©ì½”ë“œ
+    private String item_code;  //í’ˆëª©ì½”ë“œ
+    private String plan_of_purchase_orders_code; //ë°œì£¼ê³„íšì„œë²ˆí˜¸
+    private String supplier; //êµ¬ë§¤ì²˜
+    private String item_name; //í’ˆëª©ëª…
+    private int order_quantity;  //ë°œì£¼ìˆ˜ëŸ‰
+    private String item_specification;  //ê·œê²©
+    private int purchase_price;  //êµ¬ë§¤ë‹¨ê°€
 }

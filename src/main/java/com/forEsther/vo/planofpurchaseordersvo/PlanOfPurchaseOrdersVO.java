@@ -4,12 +4,12 @@ import java.util.Date;
 
 import lombok.Data;
 
-//¹ßÁÖ°èÈ¹¼­
+//ë°œì£¼ê³„íšì„œ
 @Data
 public class PlanOfPurchaseOrdersVO { 
-    private String plan_of_purchase_orders_code; //¹ßÁÖ°èÈ¹¼­¹øÈ£
-    private String plan_name; //¹ßÁÖ°èÈ¹¼­¸í
-    private String employee_id; //»ç¹ø (-> UserVO °´Ã¼¿¡¼­ ¹Ş¾Æ¿Ã ¿¹Á¤)
-    private Date creation_date; //ÀÛ¼ºÀÏÀÚ
-    private String status; //»óÅÂ (¿¹ : ´ë±â, °áÁ¦¿äÃ», ½ÂÀÎ, ¹İ·Á)
+    private String plan_of_purchase_orders_code; //ë°œì£¼ê³„íšì„œë²ˆí˜¸
+    private String plan_name; //ë°œì£¼ê³„íšì„œëª…
+    private String employee_id; //ì‚¬ë²ˆ (-> UserVO ê°ì²´ì—ì„œ ë°›ì•„ì˜¬ ì˜ˆì •)
+    private Date creation_date; //ì‘ì„±ì¼ì
+    private String status; //ìƒíƒœ (ì˜ˆ : ëŒ€ê¸°, ê²°ì œìš”ì²­, ìŠ¹ì¸, ë°˜ë ¤)
 }
