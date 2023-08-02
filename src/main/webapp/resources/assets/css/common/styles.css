@@ -1,4 +1,10 @@
 /* 기존 CSS 수정 */
+.app-brand-text.demo {
+  text-transform: none;
+  font-size: x-large;
+  font-weight: bold;
+}
+
 
 
 /* 새로운 CSS 추가 */
