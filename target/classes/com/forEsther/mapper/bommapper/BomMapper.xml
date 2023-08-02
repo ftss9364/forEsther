@@ -28,11 +28,25 @@
   	</resultMap>
   	
   	<select id="getList" resultMap="BomVO">
+  		select b.bom_code as bom_code, b.product_name as product_name, 
+  			br.bom_registration_code as bom_registration_code, 
+    		br.item_code as item_code, i.item_name as item_name, 
+    		br.required_quantity as required_quantity 
+    	from tbl_bom_registration br , tbl_bom b , tbl_items i
+			where br.bom_code = b.bom_code and br.item_code = i.item_code
+		ORDER BY bom_registration_code
+  	</select>
+  	
+  	<select id="getCount" resultType="int">
+  		select count(*) from tbl_bom
+		where product_name like (#{product_name})
+  	</select>
+
+  	<select id="search" resultMap="BomVO">
   		select b.bom_code, b.product_name, br.bom_registration_code, 
     		br.item_code, i.item_name
     	from tbl_bom_registration br , tbl_bom b , tbl_items i
-		where br.bom_code = b.bom_code and br.item_code = i.item_code
+		where br.bom_code = b.bom_code and br.item_code = i.item_code and product_name like (#{product_name}) 
 		ORDER BY bom_registration_code
   	</select>
-
 </mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forEsther.mapper.itemmapper.ItemMapper">
+	<resultMap type="com.forEsther.vo.suppliervo.SupplierVO" id="SupplierVO">
+      <result column="supplier_code" property="supplier_code"/>
+      <result column="supplier_name" property="supplier_name"/>   
+      <result column="contact_person" property="contact_person"/>   
+      <result column="contact_number" property="contact_number"/>   
+      <result column="address" property="address"/>   
+   </resultMap>
+
+   <resultMap type="com.forEsther.vo.itemsuppliervo.ItemSupplierVO" id="ItemSupplierVO">
+      <result column="item_supplier_code" property="item_supplier_code"/>
+      <result column="supplier_code" property="supplier_code"/>
+      <result column="item_code" property="item_code"/>
+      <collection property="supplier_vo" resultMap="SupplierVO"/>   
+   </resultMap>
+
+   <resultMap type="com.forEsther.vo.itemvo.ItemVO" id="ItemVO">
+      <result column="item_code" property="item_code"/>
+      <result column="item_name" property="item_name"/>
+      <result column="item_specification" property="item_specification"/>
+      <result column="safety_stock" property="safety_stock"/>
+      <result column="serial_lot_status" property="serial_lot_status"/>
+      <result column="procurement" property="procurement"/>
+      <result column="item_classification" property="item_classification"/>
+      
+      <collection property="itemsupplier_vo" resultMap="ItemSupplierVO"/>   
+      
+   </resultMap>
+
+   
+   
+     <select id="getList" resultMap="ItemVO">
+        <![CDATA[
+        SELECT 
+          i.item_code,
+          i.item_classification,
+          i.item_name,
+          i.item_specification,
+          i.safety_stock,
+          su.supplier_name
+      FROM tbl_items i
+      LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
+      LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
+        ]]>
+     </select>
+	
+</mapper>

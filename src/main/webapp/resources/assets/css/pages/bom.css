@@ -1,0 +1,18 @@
+.bom-edit-btn {
+	margin-right: 15px;
+	color: var(--bs-blue);
+	}
+.bom-del-btn {
+	color: var(--bs-danger);
+	
+	}
+	
+	
+.td-box {
+	display: flex;
+}
+
+.td-box button {
+	margin: 0;
+	padding: 0;
+}
