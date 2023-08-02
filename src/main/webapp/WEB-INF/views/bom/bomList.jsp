@@ -269,8 +269,22 @@
                           <!-- page header -->
                           <header class="page-header">
                             <h2 class="page-title text-primary">대시보드</h1>
+                            
+                            
+                            <form id="searchForm" action="/bom/bomList" method='get'>
+                            
+                            <!-- Dropbox UI-->
+                          <div>
+                            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+                              <option value="1" selected>모품목명</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <!-- / Dropbox UI-->
+                            
                             <!-- Search UI -->
-                          <div class="test-ui-container">
+                          <div class="search-menu">
                             <div class="input-group input-group-merge">
                               <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                               <input
@@ -283,6 +297,10 @@
                             </div>
                           </div>
                           <!-- / Search UI -->
+                          <div>
+                              <button type="submit" class="btn btn-primary">검색</button>
+                          </div>
+                            </form>
 
                           <br/>
                           <br/>
