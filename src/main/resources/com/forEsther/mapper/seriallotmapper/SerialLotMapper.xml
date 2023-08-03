@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forEsther.mapper.seriallotmapper.SerialLotMapper">
+	<!-- sql문 
+		serial_lot_code, item_code, registration_date, item_name, expiration_date,
+		stock_quantity, supplier, related_invoice
+	-->
+	<!-- insert -->
+	<insert id="insert">
+		insert into tbl_serial_lot values (
+			#{serial_lot_code}, #{item_code}, sysdate, #{item_name},
+			#{expiration_date}, #{stock_quantity}, #{supplier}, #{related_invoice}
+		)
+	</insert>
+	
+	<!-- update -->
+	<update id="update">
+		update tbl_serial_lot set
+		stock_quantity = #{stock_quantity},
+		item_name = #{item_name},
+		expiration_date = #{expiration_date}
+		where serial_lot_code = #{serial_lot_code}
+	</update>
+	
+	<!-- resultMap -->
+     <resultMap type="com.forEsther.vo.seriallotvo.SerialLotVO" id="serialLotResult">
+        <id property="serial_lot_code" column="serial_lot_code"/>
+        <result column="item_code" property="item_code"/>
+        <result column="item_name" property="item_name"/>
+        <result column="registration_date" property="registration_date"/>
+        <result column="expiration_date" property="expiration_date"/>
+        <result column="stock_quantity" property="stock_quantity"/>
+        <result column="supplier" property="supplier"/>
+        <result column="related_invoice" property="related_invoice"/>
+        <!-- 시리얼로트와 품목은 연관관계(1대다) -->
+        <collection property="itemVO" column="item_code" javaType="com.forEsther.vo.itemvo.ItemVO">
+        <id property="item_code" column="item_code"/>
+        <result property="item_name" column="item_name"/>
+        </collection>
+     </resultMap>
+     
+   	<!-- read -->
+	<select id="read" parameterType="String" resultMap="serialLotResult">
+		
+		select 
+		tsl.serial_lot_code as serial_lot_code,
+		ti.item_code as item_code,
+		ti.item_name as item_name,
+		tsl.registration_date as registration_date,
+		tsl.expiration_date as expiration_date,
+		tsl.stock_quantity as stock_quantity,
+		tsl.supplier as supplier,
+		tsl.related_invoice as related_invoice
+		
+		from tbl_serial_lot tsl, tbl_items ti
+		where tsl.item_code = ti.item_code
+		and serial_lot_code = #{serial_lot_code}
+	</select>
+	
+	<!-- getList -->
+	<select id="getList" resultMap="serialLotResult">
+		select 
+		tsl.serial_lot_code as serial_lot_code,
+		ti.item_code as item_code,
+		ti.item_name as item_name,
+		tsl.registration_date as registration_date,
+		tsl.expiration_date as expiration_date,
+		tsl.stock_quantity as stock_quantity,
+		tsl.supplier as supplier,
+		tsl.related_invoice as related_invoice
+		
+		from tbl_serial_lot tsl, tbl_items ti
+		where tsl.item_code = ti.item_code
+	</select>
+	
+	
+</mapper>

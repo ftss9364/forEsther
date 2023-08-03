@@ -159,7 +159,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="index.html" class="menu-link">
+                  <a href="/serialLot/serialLotList" class="menu-link">
                     <div data-i18n="Container">SERIAL LOT관리</div>
                   </a>
                 </li>

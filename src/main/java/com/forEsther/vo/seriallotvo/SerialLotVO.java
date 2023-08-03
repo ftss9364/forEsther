@@ -2,6 +2,9 @@ package com.forEsther.vo.seriallotvo;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Repository;
+
+import com.forEsther.vo.itemvo.ItemVO;
 
 import lombok.Data;
 // 시리얼로트
@@ -15,5 +18,5 @@ public class SerialLotVO {
     private int stock_quantity; // 재고수량
     private String supplier; // 구매처 (-> SupplierVO 객체에서 받아올 예정)
     private String related_invoice; // 연결전표
-    
+    private ItemVO itemVO; // 연결된 객체
 }
