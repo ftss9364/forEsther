@@ -1,0 +1,48 @@
+/* 기존 CSS 수정 */
+
+/* 새로운 CSS 추가 */
+.page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.page-title {
+	margin: 14px 0;
+	font-size: x-large;
+	font-weight: bold;
+}
+
+.test-ui-bg {
+	padding: 10px;
+	background-color: rgb(245, 245, 249);
+}
+
+.sy-ui-container-rg {
+	margin-left: auto;
+	display: flex;
+}
+				
+.sy-ui-select {
+	margin-right: 5px;
+}				
+				
+.sy-ui-container {
+	display: flex;
+	align-items: end;
+}
+
+.table a{
+	font-weight: bold;
+	color: #697a8d;
+	text-decoration: underline;
+}
+
+.sy-nav-container, .radio-btn {
+	display: flex;
+	justify-content: center;
+}
+
+.modal-title, .sub-title {
+	font-weight: bold;
+}
