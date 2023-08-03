@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="../resources/assets/css/demo.css" />
     <!-- ### 커스텀 css 파일 삽입 위치 ###-->
     <link rel="stylesheet" href="../resources/assets/css/common/styles.css">
-    <link rel="stylesheet" href="../resources/assets/css/pages/bom.css" />
+    <link rel="stylesheet" href="../resources/assets/css/pages/bomGet.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -134,7 +134,7 @@
           <!-- Menu list -->
           <ul class="menu-inner py-1">
             <!-- 대시보드 -->
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
@@ -143,7 +143,7 @@
             <!-- // 대시보드 -->
 
             <!-- 재고관리 -->
-            <li class="menu-item active open">
+            <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">재고관리</div>
@@ -155,7 +155,7 @@
                     <div data-i18n="Without menu">품목관리</div>
                   </a>
                 </li>
-                <li class="menu-item active">
+                <li class="menu-item">
                   <a href="index.html" class="menu-link">
                     <div data-i18n="Without navbar">BOM관리</div>
                   </a>
@@ -267,72 +267,99 @@
                         <div class="card-body">
                           <!-- page header -->
                           <header class="page-header">
-                            <h2 class="page-title text-primary">BOM 관리</h2>
-                            <!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">신규작성</button>
+                            <h2 class="page-title text-primary">BOM 상세정보</h1>
+                            <div>
+                            </div>
                           </header>
-                          
-                          <!-- Modal -->
-							<div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
-							  <div class="modal-dialog modal-dialog-centered" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel1">BOM 신규 작성</h5>
-							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							      </div>
-							      <div class="modal-body">
-							        <div class="row g-2">
-							          <div class="col mb-0">
-										<!-- Dropbox UI-->
-				                            <label for="item_name" class="form-label">모품목 선택</label>
-				                            <select class="form-select" id="item_name" aria-label="모품목을 선택해 주세요">
-				                              <c:forEach items="${item_list}" var="item">                              	
-												<c:set var="j" value="${j+1}"/>
-												<c:choose>
-													<c:when test="${j eq 1}">
-						                              <option value="${item}" selected><c:out value="${item.item_name}" /></option>											
-													</c:when>
-													<c:otherwise>
-						                              <option value="${item}"><c:out value="${item.item_name}" /></option>																				
-													</c:otherwise>
-												</c:choose>
-				                              </c:forEach>
-				                            </select>
-				                          <!-- / Dropbox UI-->
-							          </div>
-							        </div>
-							        <br>
-							        <div class="row g-2">
-							          <div class="col mb-0">
-							            <label for="product_name" class="form-label">제품명</label>
-							            <input type="text" id="product_name" class="form-control" placeholder="BOM 등록할 제품명을 등록하세요.">
-							          </div>
-							        </div>
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">취소</button>
-							        <button type="button" class="btn btn-primary">BOM 등록</button>
-							      </div>
-							    </div>
-							  </div>
-							</div>
                           <hr />
+
+                          <br/>
+                          <br/>
                           
-                       		<div class="table-filter">
-                             <strong class="total-text">전체 <span><c:out value="${fn:length(data)}"/></span>건</strong>
-                             <form class="search-combo" action="/bom/list" method="post">
-                                <!-- Dropbox UI-->
-                                <div class="search-combo-dropbox">
-                                   <select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                                      <option vlaue="품목명">모품목명</option>
-                                      <option value="구매처명">구매처명</option>
-                                   </select>
+                          <div class="bigbox">
+                          	<div class="smallbox-1">
+                          		<ul>
+							<li><h3>BOM 코드 : <c:out value="${bom.bom_code }" /></h3></li>
+							<li><h3>모품목 코드 : <c:out value="${fn:substring(bom.bom_code,2,7)}" /></h3></li>
+							<li><h3>모품명 : <c:out value="${bom.product_name}" /></h3></li>
+						</ul>
+						
+						<br/>
+                          <!-- Vertical Scrollbar -->
+                         <h3 class="text-primary">자품목 리스트</h3>
+                          <div class="test-ui-bg scroll-list">
+                            <div class="col-md-6 col-sm-12 div-table">
+                              <div class="card overflow-hidden mb-4 div-scroll-list">
+                                <div class="card-body overflow-auto">
+                                   
+                                   <!-- Table UI -->
+			                          <div class="table-responsive text-nowrap">
+			                          
+			                          
+			                            <table class="table table-bordered item-table">
+                              <thead>
+                                <tr>
+                                  <th>순번</th>
+                                  <th>품목코드</th>
+                                  <th>품목명</th>
+                                  <th>규격</th>
+                                  <th>원재료 필요수량</th>                                  
+                                </tr>
+                              </thead>
+                              <tbody>
+                              <c:forEach items="${bom.bom_register_vo}" var="list">
+                              	<c:set var="i" value="${i+1}" />
+                                <tr>
+                                  <td><c:out value="${i}"></c:out></td>
+                                  <td class="td-box">
+                                  	<a class="move" href="${list.item_code}"><c:out value="${list.item_code}"/></a>
+                                  </td>
+                                  <td><c:out value="${list.item_vo.item_name}"/></td>
+                                  <td><c:out value="${list.item_vo.item_specification}"/></td>
+                                  <td>
+	                                  <input type="text" value="${list.required_quantity }" />
+                                  </td>
+                                </tr>
+                              	
+                              </c:forEach>
+                              <c:forEach items="${bom.bom_register_vo}" var="list">
+                              	<c:set var="i" value="${i+1}" />
+                                <tr>
+                                  <td><c:out value="${i}"></c:out></td>
+                                  <td class="td-box">
+                                  	<a class="move" href="${list.item_code}"><c:out value="${list.item_code}"/></a>
+                                  </td>
+                                  <td><c:out value="${list.item_vo.item_name}"/></td>
+                                  <td><c:out value="${list.item_vo.item_specification}"/></td>
+                                  <td>
+	                                  <input type="text" value="${list.required_quantity }" />
+                                  </td>
+                                </tr>
+                              	
+                              </c:forEach>
+                               
+                              </tbody>
+                            </table>
+			                          </div>
+			                          <!--/ Table UI -->
                                 </div>
-                                <!-- / Dropbox UI-->
+                              </div>
+                            </div>
+                          </div>
+                          <!-- / Vertical Scrollbar -->
+                          	</div>
+                          	<div class="smallbox-2">
+                          		 <!-- Vertical Scrollbar -->
+                          <div class="test-ui-bg scroll-list">
+                            <div class="col-md-6 col-sm-12 div-table">
+                            
+                         <h3 class="text-primary">자품목 추가</h3>
+                         <div class="table-filter">
+                             <form class="search-combo" action="/bom/list" method="post">
                                 <!-- Search UI -->
                                 <div class="search-combo-input">
                                    <div class="input-group input-group-merge">
-                                      <input name="product_name" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                                      <input name="product_name" type="text" class="form-control" placeholder="품목명" aria-label="Search..."
                                       aria-describedby="basic-addon-search31" />
                                       <button type="submit" class="btn btn-secondary search-btn">
                                          <i class="bx bx-search"></i>
@@ -342,139 +369,57 @@
                                 <!-- / Search UI -->
                              </form>
                           </div>
-
-                          <!-- Table UI -->
-                          <div class="table-responsive text-nowrap">
-                            <table class="table table-bordered">
+                          	<hr/>
+                              <div class="card overflow-hidden mb-4 div-scroll-list">
+                                <div class="card-body overflow-auto">
+                                   
+                                   <!-- Table UI -->
+			                          <div class="table-responsive text-nowrap">
+			                          
+			                          
+			                            <table class="table table-bordered item-table">
                               <thead>
                                 <tr>
-                                  <th>순번</th>
-                                  <th>BOM코드</th>
-                                  <th>모품목코드</th>
-                                  <th>모품목명</th>
-                                  <th>구성품목</th>                                  
-                                  <th></th>
+                                  <th>품목코드</th>
+                                  <th>품목명</th>
+                                  <th>규격</th>
+                                  <th></th>                                  
                                 </tr>
                               </thead>
                               <tbody>
-                              <c:forEach items="${list}" var="bom">
-                              	<c:set var="i" value="${i+1}" />
+                              <c:forEach items="${item_list}" var="item">
                                 <tr>
-                                  <td><c:out value="${i}"></c:out></td>
                                   <td class="td-box">
-                                  	<a class="move" href="${bom.bom_code}"><c:out value="${bom.bom_code}"/></a>
-                                  	<button type="button" class="btn btn-link accordion-button" data-toggle="collapse" data-target="#accordion${i}" aria-expanded="false" aria-controls="accordion${i}"><i class="fab fa-angular text-danger me-3"></i></button>
-                                  	
+                                  	<a class="move" href="${item.item_code}"><c:out value="${item.item_code}"/></a>
                                   </td>
-                                  <td><a href=""><c:out value="${fn:substring(bom.bom_code,2,7)}"/></a></td>
-                                  <td><c:out value="${bom.product_name}"/></td>
+                                  <td><c:out value="${item.item_name}"/></td>
+                                  <td><c:out value="${item.item_specification}"/></td>
                                   <td>
-                                  	<c:set var="temp" value=""/>
-                                  	<c:set var="check" value="true" />
-									<c:forEach items="${bom.bom_register_vo }" var="bom_rg">
-										<c:if test="${check }">
-											<c:choose>
-												<c:when test="${fn:length(temp) gt 15 }">
-													<c:out value="${fn:substring(temp, 0, 14)}..."/>
-													<c:set var="check" value="false"/>
-												</c:when>														
-												<c:otherwise>
-				                                  	<c:set var="temp" value="${temp}${bom_rg.item_vo.item_name}, "/>
-												</c:otherwise>	
-											</c:choose>	
-										</c:if>
-									</c:forEach>
-                                  </td>
-                                  <td>
-	                                  <a class="bom-edit-btn" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>수정</a><a class="bom-del-btn" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>삭제</a>
+                                  	<button type="button" class="btn btn-secondary search-btn">
+                                         <i class="bx bx-plus"></i>
+                                      </button> 
                                   </td>
                                 </tr>
-                              	<tr>
                               	
-				                    <td colspan="6" class="p-0">
-				                        <div id="accordion${i}" class="collapse">
-		                              		<table class="card-body table">
-		                              			<thead>
-		                              				<tr>
-		                              					<th>        </th>
-			                              				<th>자품목코드</th>
-			                              				<th>자품목명</th>
-			                              				<th>필요수량</th>
-		                              					<th>        </th>
-		                              					<th>        </th>
-		                              				</tr>
-		                              			</thead>
-		                              			<tbody>
-	                              					<c:forEach items="${bom.bom_register_vo }" var="bom_rg">
-			                              				<tr>
-			                              					<td>        </td>
-															<td><a href=""><c:out value="${bom_rg.item_code}"/></a></td>
-															<td><c:out value="${bom_rg.item_vo.item_name}"/></td>
-															<td><c:out value="${bom_rg.required_quantity}"/></td>
-			                              					<td>        </td>
-			                              					<td>        </td>
-			                              				</tr>
-													</c:forEach>
-		                              			</tbody>	
-		                              		</table>
-				                        </div>
-				                    </td>
-				                </tr>
                               </c:forEach>
                                
                               </tbody>
                             </table>
+			                          </div>
+			                          <!--/ Table UI -->
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <!--/ Table UI -->
-
-                          <br/>
-                          <br/>
-
-                          <!-- Pagination UI -->
-                          <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                              <li class="page-item first">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item prev">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">1</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">2</a>
-                              </li>
-                              <li class="page-item active">
-                                <a class="page-link" href="javascript:void(0);">3</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">4</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">5</a>
-                              </li>
-                              <li class="page-item next">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-right"></i
-                                ></a>
-                              </li>
-                              <li class="page-item last">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-right"></i
-                                ></a>
-                              </li>
-                            </ul>
-                          </nav>
-                          <!-- / Pagination UI -->
-
-                          <br/>
-                          <br/>
+                          <!-- / Vertical Scrollbar -->
+                          	</div>
+                          	
                           
+                          
+                          </div>
+						
+
+                     
                       </div>
                     </div>
                   </div>
@@ -504,9 +449,6 @@
         </section>
         <!-- / Layout page -->
       </div>
-      
-      <form id='actionForm' action="/board/list" method='get'>
-      </form>
 
               <!-- Overlay -->
               <div class="layout-overlay layout-menu-toggle"></div>
@@ -535,26 +477,8 @@
             
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
 
     <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
     <script src="../resources/assets/js/pages/index.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    	$(function() {
-			var actionForm = $("#actionForm");
-			
-			$(".move").on("click" , function(e) {
-				e.preventDefault();
-				actionForm.append("<input type='hidden' name='bom_code' value='"	+ $(this).attr("href") + "'>")
-				actionForm.attr("action", "/bom/get");
-				actionForm.submit();
-			
-			});
-		});
-    
-    </script>
   </body>
 </html>

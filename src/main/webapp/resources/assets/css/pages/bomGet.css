@@ -1,0 +1,66 @@
+.td-box {
+	display: flex;
+}
+
+.td-box button {
+	margin: 0;
+	padding: 0;
+}
+
+.table-filter {
+    margin: 26px 0 10px;
+    width: 100%;
+}
+.total-text {
+   font-size: large;
+}
+
+.search-combo {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.search-combo-dropbox {
+     width: 200px;
+}
+
+.search-combo-input {
+     width: 90%;
+}
+
+
+.item-table input {
+	width: 50px;
+	
+}
+.scroll-list {
+}
+.div-scroll-list {
+	height: 400px;
+}
+
+.div-table {
+	width: 100%;
+}
+
+.bigbox {
+	display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.smallbox-2{
+	height: 600px;
+	
+}
+
+.smallbox-2 .scroll-list{
+	height: 100%;
+}
+
+
+.anyClass {
+  height:150px;
+  overflow-y: scroll;
+}

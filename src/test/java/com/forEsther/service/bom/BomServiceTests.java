@@ -20,10 +20,10 @@ public class BomServiceTests {
 	@Autowired
 	private BomService service;
 	
-	@Test
-	public void testGetList() {
-		service.getList().forEach(bom -> log.info(bom));
-	}
+//	@Test
+//	public void testGetList() {
+//		service.getList().forEach(bom -> log.info(bom));
+//	}
 	
 //	@Test
 //	public void testGet() {
@@ -39,4 +39,5 @@ public class BomServiceTests {
 //		log.info(service.getCount(menu) + "-------------------------------------");
 //		
 //	}
+
 }

@@ -16,3 +16,40 @@
 	margin: 0;
 	padding: 0;
 }
+
+.table-filter {
+   margin: 26px 0 10px;
+   display: flex;
+   justify-content: space-between;
+     align-items: end;
+   width: 100%;
+}
+
+.total-text {
+   font-size: large;
+}
+
+.search-combo {
+  display: flex;
+  gap: 10px;
+}
+
+.search-combo-dropbox {
+     width: 200px;
+}
+
+.search-combo-input {
+     width: 300px;
+}
+
+.pagination {
+   margin: 30px 0;
+   justify-content: center;
+}
+
+.page-header{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+	
+}

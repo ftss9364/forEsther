@@ -13,5 +13,4 @@ public class BomVO {
     private String product_name; //제품명 (-> ItemVO 객체에서 받아올 예정)
     
     private List<BomRegistrationVO> bom_register_vo;
-    private int rownum;
 }

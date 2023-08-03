@@ -11,6 +11,7 @@
 	
   	<resultMap type="com.forEsther.vo.itemvo.ItemVO" id="ItemVO">
   		<result column="item_name" property="item_name"/>
+  		<result column="item_specification" property="item_specification"/>
   	</resultMap>
 
   	<resultMap type="com.forEsther.vo.bomregistrationvo.BomRegistrationVO" id="BomRegistrationVO">
@@ -44,9 +45,52 @@
 
   	<select id="search" resultMap="BomVO">
   		select b.bom_code, b.product_name, br.bom_registration_code, 
-    		br.item_code, i.item_name
+    		br.item_code, i.item_name, br.required_quantity
     	from tbl_bom_registration br , tbl_bom b , tbl_items i
 		where br.bom_code = b.bom_code and br.item_code = i.item_code and product_name like (#{product_name}) 
 		ORDER BY bom_registration_code
   	</select>
+  	
+  	<select id="get" resultMap="BomVO">
+  		select b.bom_code, b.product_name, br.bom_registration_code, 
+    		br.item_code, i.item_name, br.required_quantity, i.item_specification
+    	from tbl_bom_registration br , tbl_bom b , tbl_items i
+		where br.bom_code = b.bom_code and br.item_code = i.item_code and b.bom_code like (#{bom_code}) 
+		ORDER BY bom_registration_code
+  	</select>
+  	
+  	<insert id="insert_bom_registration">
+  		insert into tbl_bom_registration (bom_registration_code, bom_code, item_code, required_quantity)
+  		values (#{bom_registration_code}, #{bom_code}, #{item_code}, #{required_quantity})
+  	</insert>
+  	
+  	<insert id="insert_bom">
+  		insert into tbl_bom (bom_code, product_name)
+  		values (#{bom_code}, #{product_name})
+  	</insert>
+  	
+  	<delete id="delete_bom">
+  		delete from tbl_bom where bom_code = #{bom_code}
+  	</delete>
+  	
+  	
+  	<delete id="delete_bom_to_bom_registration">
+  		delete from tbl_bom_registration where bom_code = #{bom_code}
+  	</delete>
+  	
+  	<delete id="delete_bom_registration">
+  		delete from tbl_bom_registration where bom_registration_code = #{bom_registration_code}
+  	</delete>
+  	
+  	<select id="getBomregCount" resultType="String">
+  		select max(bom_registration_code) from tbl_bom_registration
+  	</select>
+  	
+  	<select id="getBomItemList" resultType="com.forEsther.vo.itemvo.ItemVO">
+  		select * from tbl_items where item_classification = '제품'
+  	</select>
+  	<select id="getItemList" resultType="com.forEsther.vo.itemvo.ItemVO">
+  		select * from tbl_items where item_classification != '제품'
+  	</select>
+  	
 </mapper>
