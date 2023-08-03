@@ -1,5 +1,8 @@
 package com.forEsther.controller.bom;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.forEsther.service.bom.BomService;
 import com.forEsther.vo.itemvo.ItemVO;
@@ -50,6 +54,20 @@ public class BomController {
 	
 		return "bom/bomGet";
 	}
+	
+	@PostMapping("/plus")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> moveRow(@RequestParam String itemCode) {
+        // Here, you should implement the logic to move the row and return the necessary data.
+        // Replace this with your actual logic to fetch the data and process the move.
+        // You need to create a map containing the required data for the new row.
+        // For simplicity, I'm assuming you have access to a service or repository to fetch the data.
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("item", service.getItem(itemCode));
+        log.info(response);
+        return ResponseEntity.ok(response);
+    }
 	
 }

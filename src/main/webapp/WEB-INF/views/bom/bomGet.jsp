@@ -296,7 +296,7 @@
 			                          <div class="table-responsive text-nowrap">
 			                          
 			                          
-			                            <table class="table table-bordered item-table">
+			                            <table class="table table-bordered item-table table-1">
                               <thead>
                                 <tr>
                                   <th>순번</th>
@@ -395,7 +395,7 @@
                                   <td><c:out value="${item.item_name}"/></td>
                                   <td><c:out value="${item.item_specification}"/></td>
                                   <td>
-                                  	<button type="button" class="btn btn-secondary search-btn">
+                                  	<button type="button" class="btn btn-secondary plus-btn">
                                          <i class="bx bx-plus"></i>
                                       </button> 
                                   </td>
@@ -480,5 +480,53 @@
 
     <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
     <script src="../resources/assets/js/pages/index.js"></script>
+    <script type="text/javascript">
+    	$(function () {
+			$(".plus-btn").on("click", function() {
+				var $row = $(this).closest("tr");
+				var itemCode = $row.find("td:first-child a").attr("href");
+				
+				
+				$.ajax({
+					type:"POST",
+					url : "/bom/plus",
+					data :{itemCode:itemCode},
+					dataType:"json",
+					success: function(response) {
+		                if (response.success) {
+		                    $row.remove();
+		                    console.log(response.item);
+		                    var lastRowNum = parseInt($(".table-1 tbody tr:last-child td:first-child").text());
+		                    var newRowNum = lastRowNum + 1;
+		                    var newRowHtml = `
+		                        <tr>
+		                            <td>`+newRowNum+`</td>
+		                            <td class="td-box">
+		                                <a class="move" href="`+response.item.item_code+`">`+response.item.item_code+`</a>
+		                            </td>
+		                            <td>`+response.item.item_name+`</td>
+		                            <td>`+response.item.item_specification+`</td>
+		                            <td>
+		                                <input type="text" value="0" />
+		                            </td>
+		                        </tr>
+		                    `;
+		                    $(".table-1 tbody").append(newRowHtml);
+		                    console.log($(".table-1 tbody").html());
+		                } else {
+		                    // Handle error
+		                }
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.log("AJAX 오류:", textStatus, errorThrown);
+		            }
+					
+					
+				});
+				
+			});
+    		
+		});
+    </script>
   </body>
 </html>

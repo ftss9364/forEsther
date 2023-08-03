@@ -88,9 +88,15 @@ public class BomMapperTests {
 //		
 //	}
 	
+//	@Test
+//	public void testItemList() {
+//		mapper.getItemList().forEach(item -> log.info(item));
+//	}
+	
 	@Test
-	public void testItemList() {
-		mapper.getItemList().forEach(item -> log.info(item));
+	public void testItem() {
+		
+		mapper.getItem("RM-001");
 	}
 	
 }

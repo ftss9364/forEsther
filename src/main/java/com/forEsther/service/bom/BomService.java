@@ -21,4 +21,6 @@ public interface BomService {
 	public List<ItemVO> getItemList();
 	public List<ItemVO> getBomItemList();
 	
+	public ItemVO getItem(String item_code);
+	
 }

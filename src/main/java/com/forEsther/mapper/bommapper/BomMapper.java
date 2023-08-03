@@ -19,4 +19,5 @@ public interface BomMapper {
 	public int delete_bom_registration(String bom_registration_code);
 	public List<ItemVO> getBomItemList();
 	public List<ItemVO> getItemList();
+	public ItemVO getItem(String item_code);
 }

@@ -92,5 +92,8 @@
   	<select id="getItemList" resultType="com.forEsther.vo.itemvo.ItemVO">
   		select * from tbl_items where item_classification != '제품'
   	</select>
+  	<select id="getItem" resultType="com.forEsther.vo.itemvo.ItemVO">
+  		select * from tbl_items where item_code = #{item_code}
+  	</select>
   	
 </mapper>

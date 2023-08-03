@@ -114,4 +114,13 @@ public class BomServiceImpl implements BomService {
 		return mapper.get(bom_code);
 	}
 
+	@Override
+	public ItemVO getItem(String item_code) {
+		
+		log.info("getItem..................");
+		return mapper.getItem(item_code);
+	}
+
+
+
 }
