@@ -1,1 +1,1 @@
-console.log('item list page ...');
+console.log('item list js ...');

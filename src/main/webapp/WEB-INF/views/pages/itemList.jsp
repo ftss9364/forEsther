@@ -55,6 +55,7 @@
 <!-- ### 커스텀 css 파일 삽입 위치 ###-->
 <link rel="stylesheet" href="../resources/assets/css/common/styles.css" />
 <link rel="stylesheet" href="../resources/assets/css/pages/itemList.css" />
+<link rel="stylesheet" href="../resources/assets/css/components/modal.css" />
 
 <!-- Helpers -->
 <script src="../resources/assets/vendor/js/helpers.js"></script>
@@ -239,39 +240,40 @@
 											<div class="card-body">
 												<!-- page header -->
 												<header class="page-header">
-													<h2 class="page-title text-primary">품목 조회</h1>
-													<button type="button" class="btn btn-primary">신규등록</button>
+													<h2 class="page-title text-primary">품목 조회</h2>
+													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">신규등록</button>
+													<%@ include file="../components/modal.jsp" %>
 												</header>
 												<hr />
 
 												<div class="table-filter">
 													<strong class="total-text">전체 <span><c:out value="${fn:length(data)}"/></span>건</strong>
-													<div class="search-combo">
+													<form class="search-combo" action="/item/search" method="post">
 														<!-- Dropbox UI-->
 														<div class="search-combo-dropbox">
-															<select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-																<option vlaue="1" selected>품목명</option>
-																<option value="2">구매처명</option>
+															<select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+																<option vlaue="품목명">품목명</option>
+																<option value="구매처명">구매처명</option>
 															</select>
 														</div>
 														<!-- / Dropbox UI-->
 														<!-- Search UI -->
 														<div class="search-combo-input">
 															<div class="input-group input-group-merge">
-																<span class="input-group-text" id="basic-addon-search31">
-																	<i class="bx bx-search"></i>
-																</span> 
-																<input type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+																<input name="searchValue" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
 																aria-describedby="basic-addon-search31" />
+																<button type="submit" class="btn btn-secondary search-btn">
+																	<i class="bx bx-search"></i>
+																</button> 
 															</div>
 														</div>
 														<!-- / Search UI -->
-													</div>
+													</form>
 												</div>
 
 												<!-- Table -->
 												<div class="table-responsive text-nowrap">
-													<table class="table table-bordered">
+													<table class="table table-bordered table-hover">
 														<thead>
 															<tr>
 																<th >순번</th>
@@ -296,7 +298,7 @@
 																	<td><c:out value="${item.item_name}" /></td>
 																	<td><c:out value="${item.item_specification}" /></td>
 																	<td><c:out value="${item.safety_stock}" /></td>
-																	<td><c:out value="구매처명" /></td>
+																	<td><c:out value="${item.itemsupplier_vo[0].supplier_vo.supplier_name}" /></td>
 																	<td>
 																		<div class="dropdown">
 																			<button type="button"
@@ -409,5 +411,6 @@
 
 	<!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
 	<script src="../resources/assets/js/pages/itemList.js"></script>
+	<script src="../resources/assets/js/components/modal.js"></script>
 </body>
 </html>

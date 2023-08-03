@@ -1,0 +1,15 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.form-radiobox-group {
+  display: flex;
+  gap: 20px;
+}
+
+.visible-hidden {
+  display: none;
+}
