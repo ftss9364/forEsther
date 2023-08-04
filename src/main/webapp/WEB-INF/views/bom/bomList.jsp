@@ -385,8 +385,9 @@
 										</c:if>
 									</c:forEach>
                                   </td>
-                                  <td>
-	                                  <a class="bom-edit-btn" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>수정</a><a class="bom-del-btn" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>삭제</a>
+                                  <td class="td-btn">
+	                                  <a class="bom-edit-btn move" href="${bom.bom_code}"><i class="bx bx-edit-alt me-1"></i>수정</a>
+	                                  <a class="bom-del-btn" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>삭제</a>
                                   </td>
                                 </tr>
                               	<tr>

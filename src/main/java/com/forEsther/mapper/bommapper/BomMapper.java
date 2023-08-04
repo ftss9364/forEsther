@@ -20,4 +20,5 @@ public interface BomMapper {
 	public List<ItemVO> getBomItemList();
 	public List<ItemVO> getItemList();
 	public ItemVO getItem(String item_code);
+	public List<ItemVO> searchItem(String item_name);
 }

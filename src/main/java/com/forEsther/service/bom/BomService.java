@@ -23,4 +23,6 @@ public interface BomService {
 	
 	public ItemVO getItem(String item_code);
 	
+	public List<ItemVO> searchItem(String item_name);
+	
 }

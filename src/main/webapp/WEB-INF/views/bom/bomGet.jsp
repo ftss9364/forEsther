@@ -273,23 +273,22 @@
                           </header>
                           <hr />
 
-                          <br/>
-                          <br/>
                           
                           <div class="bigbox">
                           	<div class="smallbox-1">
                           		<ul>
 							<li><h3>BOM 코드 : <c:out value="${bom.bom_code }" /></h3></li>
+							<input type='hidden' id='bom_code' name='bom_code' value='<c:out value="${bom.bom_code}"/>'/>
 							<li><h3>모품목 코드 : <c:out value="${fn:substring(bom.bom_code,2,7)}" /></h3></li>
 							<li><h3>모품명 : <c:out value="${bom.product_name}" /></h3></li>
 						</ul>
 						
 						<br/>
                           <!-- Vertical Scrollbar -->
-                         <h3 class="text-primary">자품목 리스트</h3>
+                         <h4 class="text-primary">자품목 리스트</h4>
                           <div class="test-ui-bg scroll-list">
                             <div class="col-md-6 col-sm-12 div-table">
-                              <div class="card overflow-hidden mb-4 div-scroll-list">
+                              <div class="card overflow-hidden mb-4 div-scroll-list-1">
                                 <div class="card-body overflow-auto">
                                    
                                    <!-- Table UI -->
@@ -303,7 +302,8 @@
                                   <th>품목코드</th>
                                   <th>품목명</th>
                                   <th>규격</th>
-                                  <th>원재료 필요수량</th>                                  
+                                  <th>필요수량</th>     
+                                  <th></th>                             
                                 </tr>
                               </thead>
                               <tbody>
@@ -319,24 +319,15 @@
                                   <td>
 	                                  <input type="text" value="${list.required_quantity }" />
                                   </td>
-                                </tr>
-                              	
-                              </c:forEach>
-                              <c:forEach items="${bom.bom_register_vo}" var="list">
-                              	<c:set var="i" value="${i+1}" />
-                                <tr>
-                                  <td><c:out value="${i}"></c:out></td>
-                                  <td class="td-box">
-                                  	<a class="move" href="${list.item_code}"><c:out value="${list.item_code}"/></a>
-                                  </td>
-                                  <td><c:out value="${list.item_vo.item_name}"/></td>
-                                  <td><c:out value="${list.item_vo.item_specification}"/></td>
                                   <td>
-	                                  <input type="text" value="${list.required_quantity }" />
+                                  	<button type="button" class="btn rounded-pill btn-icon btn-danger minus-btn">
+                                         <i class="bx bx-minus"></i>
+                                      </button> 
                                   </td>
                                 </tr>
                               	
                               </c:forEach>
+                            
                                
                               </tbody>
                             </table>
@@ -353,33 +344,37 @@
                           <div class="test-ui-bg scroll-list">
                             <div class="col-md-6 col-sm-12 div-table">
                             
-                         <h3 class="text-primary">자품목 추가</h3>
+                         <h4 class="text-primary">자품목 추가</h4>
                          <div class="table-filter">
-                             <form class="search-combo" action="/bom/list" method="post">
-                                <!-- Search UI -->
-                                <div class="search-combo-input">
+                                <!-- <div class="search-combo-input">
                                    <div class="input-group input-group-merge">
-                                      <input name="product_name" type="text" class="form-control" placeholder="품목명" aria-label="Search..."
+                                      <input id="item_name_input" type="text" class="form-control" placeholder="품목명" aria-label="Search..."
                                       aria-describedby="basic-addon-search31" />
                                       <button type="submit" class="btn btn-secondary search-btn">
                                          <i class="bx bx-search"></i>
                                       </button> 
                                    </div>
+                                </div> -->
+                                <div class="search-combo">
+	                                <div class="input-group input-group-merge search-combo-input">
+							          <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+							          <input type="text" class="form-control" id="item_name_input"  placeholder="품목명 검색..." aria-label="Search..." aria-describedby="basic-addon-search31">
+							        </div>
                                 </div>
                                 <!-- / Search UI -->
-                             </form>
                           </div>
                           	<hr/>
-                              <div class="card overflow-hidden mb-4 div-scroll-list">
+                              <div class="card overflow-hidden mb-4 div-scroll-list-2">
                                 <div class="card-body overflow-auto">
                                    
                                    <!-- Table UI -->
 			                          <div class="table-responsive text-nowrap">
 			                          
 			                          
-			                            <table class="table table-bordered item-table">
+			                            <table class="table table-bordered item-table table-2">
                               <thead>
                                 <tr>
+                                  <th>순번</th>
                                   <th>품목코드</th>
                                   <th>품목명</th>
                                   <th>규격</th>
@@ -388,14 +383,16 @@
                               </thead>
                               <tbody>
                               <c:forEach items="${item_list}" var="item">
+                                <c:set var="j" value="${j+1}"/>
                                 <tr>
+                                	<td><c:out value="${j}" /></td>
                                   <td class="td-box">
                                   	<a class="move" href="${item.item_code}"><c:out value="${item.item_code}"/></a>
                                   </td>
                                   <td><c:out value="${item.item_name}"/></td>
                                   <td><c:out value="${item.item_specification}"/></td>
-                                  <td>
-                                  	<button type="button" class="btn btn-secondary plus-btn">
+                                  <td class="td-plusbtn">
+                                  	<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
                                          <i class="bx bx-plus"></i>
                                       </button> 
                                   </td>
@@ -482,9 +479,9 @@
     <script src="../resources/assets/js/pages/index.js"></script>
     <script type="text/javascript">
     	$(function () {
-			$(".plus-btn").on("click", function() {
+			$(document).on("click",".plus-btn", function() {
 				var $row = $(this).closest("tr");
-				var itemCode = $row.find("td:first-child a").attr("href");
+				var itemCode = $row.find("td:nth-child(2) a").attr("href");
 				
 				
 				$.ajax({
@@ -495,12 +492,9 @@
 					success: function(response) {
 		                if (response.success) {
 		                    $row.remove();
-		                    console.log(response.item);
-		                    var lastRowNum = parseInt($(".table-1 tbody tr:last-child td:first-child").text());
-		                    var newRowNum = lastRowNum + 1;
 		                    var newRowHtml = `
 		                        <tr>
-		                            <td>`+newRowNum+`</td>
+		                            <td></td>
 		                            <td class="td-box">
 		                                <a class="move" href="`+response.item.item_code+`">`+response.item.item_code+`</a>
 		                            </td>
@@ -509,10 +503,132 @@
 		                            <td>
 		                                <input type="text" value="0" />
 		                            </td>
+		                            <td>
+                                  	<button type="button" class="btn rounded-pill btn-icon btn-danger minus-btn">
+                                         <i class="bx bx-minus"></i>
+                                      </button> 
+                                  </td>
 		                        </tr>
 		                    `;
-		                    $(".table-1 tbody").append(newRowHtml);
-		                    console.log($(".table-1 tbody").html());
+		                    $(".table-1 tbody").prepend(newRowHtml);
+		                    $(".table-1 tbody tr").each(function(index,el) {
+								$(el).find("td:first-child").text(index+1);
+							});
+		                    $(".table-2 tbody tr").each(function(index,el) {
+								$(el).find("td:first-child").text(index+1);
+							});
+		                } else {
+		                    // Handle error
+		                }
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.log("AJAX 오류:", textStatus, errorThrown);
+		            }
+					
+					
+				});
+				
+			});
+			
+			$(document).on("click",".minus-btn",function() {
+				var $row = $(this).closest("tr");
+				var itemCode = $row.find("td:nth-child(2) a").attr("href");
+				
+				
+				$.ajax({
+					type:"POST",
+					url : "/bom/plus",
+					data :{itemCode:itemCode},
+					dataType:"json",
+					success: function(response) {
+		                if (response.success) {
+		                    $row.remove();
+		                    var newRowHtml = `
+		                        <tr>
+		                            <td></td>
+		                            <td class="td-box">
+		                                <a class="move" href="`+response.item.item_code+`">`+response.item.item_code+`</a>
+		                            </td>
+		                            <td>`+response.item.item_name+`</td>
+		                            <td>`+response.item.item_specification+`</td>
+		                            <td>
+                                  	<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
+                                         <i class="bx bx-plus"></i>
+                                      </button> 
+                                  </td>
+		                        </tr>
+		                    `;
+		                    $(".table-2 tbody").prepend(newRowHtml);
+		                    $(".table-2 tbody tr").each(function(index,el) {
+								$(el).find("td:first-child").text(index+1);
+							});
+		                    $(".table-1 tbody tr").each(function(index,el) {
+								$(el).find("td:first-child").text(index+1);
+							});
+		                } else {
+		                    // Handle error
+		                }
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.log("AJAX 오류:", textStatus, errorThrown);
+		            }
+					
+					
+				});
+				
+			});
+			
+			$("#item_name_input").on("keypress",function() {
+				var itemName = $(this).val();
+				var $row = $(".table-2 tbody").find("tr");
+				var bomCode = $("#bom_code").val();
+				var row2 = $(".table-1 tbody tr").find(".move");
+				var ItemCodeArr = [];
+				
+				$.each(row2, function(index,el) {
+					ItemCodeArr[index] = el.text;
+				});
+				
+				var requestData = {
+					itemName : itemName,
+					bomCode : bomCode,
+					ItemCodeArr : ItemCodeArr						
+				};
+				
+				$.ajax({
+					type:"POST",
+					contentType: "application/json",
+					url : "/bom/search-item",
+					data: JSON.stringify(requestData),
+					dataType:"json",
+					success: function(response) {
+		                if (response.success) {
+		                    $row.remove();
+		                    
+							if(response.items.length > 0){
+								$.each(response.items, function(index,el) {
+				                    var newRowHtml = `
+				                        <tr>
+				                            <td></td>
+				                            <td class="td-box">
+				                                <a class="move" href="`+el.item_code+`">`+el.item_code+`</a>
+				                            </td>
+				                            <td>`+el.item_name+`</td>
+				                            <td>`+el.item_specification+`</td>
+				                            <td>
+		                                  	<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
+		                                         <i class="bx bx-plus"></i>
+		                                      </button> 
+		                                  </td>
+				                        </tr>
+				                    `;
+				                    $(".table-2 tbody").prepend(newRowHtml);
+								});
+			                    $(".table-2 tbody tr").each(function(index,el) {
+									$(el).find("td:first-child").text(index+1);
+								});
+								
+							}
 		                } else {
 		                    // Handle error
 		                }

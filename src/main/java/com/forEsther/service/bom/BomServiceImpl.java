@@ -121,6 +121,13 @@ public class BomServiceImpl implements BomService {
 		return mapper.getItem(item_code);
 	}
 
+	@Override
+	public List<ItemVO> searchItem(String item_name) {
+
+		log.info("searchItem.......................");
+		return mapper.searchItem(item_name);
+	}
+
 
 
 }

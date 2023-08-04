@@ -1,6 +1,8 @@
 package com.forEsther.controller.bom;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.forEsther.service.bom.BomService;
+import com.forEsther.vo.bomregistrationvo.BomRegistrationVO;
 import com.forEsther.vo.itemvo.ItemVO;
 
 import lombok.AllArgsConstructor;
@@ -48,8 +51,22 @@ public class BomController {
 	
 	@GetMapping("/get")
 	public String get(@RequestParam("bom_code") String bom_code, Model model) {
+		List<BomRegistrationVO> bomItemList = service.getDetail(bom_code).getBom_register_vo();
+		List<ItemVO> itemList = service.getItemList();
+				
+		service.getItemList().forEach(item -> {
+			bomItemList.forEach(bomItem ->{
+				
+				if(bomItem.getItem_code().equals(item.getItem_code())) {
+					itemList.remove(item);
+				}
+				
+			});		
+		});
+		
+		
 		model.addAttribute("bom", service.getDetail(bom_code));
-		model.addAttribute("item_list", service.getItemList());
+		model.addAttribute("item_list", itemList);
 		
 	
 		return "bom/bomGet";
@@ -58,16 +75,41 @@ public class BomController {
 	@PostMapping("/plus")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> moveRow(@RequestParam String itemCode) {
-        // Here, you should implement the logic to move the row and return the necessary data.
-        // Replace this with your actual logic to fetch the data and process the move.
-        // You need to create a map containing the required data for the new row.
-        // For simplicity, I'm assuming you have access to a service or repository to fetch the data.
 
+		
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("item", service.getItem(itemCode));
         log.info(response);
         return ResponseEntity.ok(response);
     }
+	
+	@PostMapping("/search-item")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> searchItem(@RequestBody Map<String, Object> requestData) {
+		String itemName = (String)requestData.get("itemName");
+		List<String> ItemCodeArr = (List<String>)requestData.get("ItemCodeArr");
+		itemName = "%"+itemName+"%";
+		
+		List<ItemVO> itemList = service.searchItem(itemName);
+		
+		log.info(ItemCodeArr);
+		
+		service.searchItem(itemName).forEach(item -> {
+			ItemCodeArr.forEach(bomItem ->{
+				
+				if(bomItem.equals(item.getItem_code())) {
+					itemList.remove(item);
+				}
+				
+			});		
+		});
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("success", true);
+		response.put("items", itemList);
+		
+		return ResponseEntity.ok(response);
+	}
 	
 }
