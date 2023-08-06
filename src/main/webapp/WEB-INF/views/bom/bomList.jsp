@@ -283,6 +283,11 @@
 							      <div class="modal-body">
 							        <div class="row g-2">
 							          <div class="col mb-0">
+										<div class="input-group input-group-merge">
+							          		<span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+							          		<input type="text" class="form-control" id="item_name_input"  placeholder="품목명 검색..." aria-label="Search..." aria-describedby="basic-addon-search31">
+							       		</div>
+							       		<br/>
 										<!-- Dropbox UI-->
 				                            <label for="item_name" class="form-label">모품목 선택</label>
 				                            <select class="form-select" id="item_name" aria-label="모품목을 선택해 주세요">
@@ -290,10 +295,10 @@
 												<c:set var="j" value="${j+1}"/>
 												<c:choose>
 													<c:when test="${j eq 1}">
-						                              <option value="${item}" selected><c:out value="${item.item_name}" /></option>											
+						                              <option value="${item.item_code}" selected><c:out value="${item.item_name}" /></option>											
 													</c:when>
 													<c:otherwise>
-						                              <option value="${item}"><c:out value="${item.item_name}" /></option>																				
+						                              <option value="${item.item_code}"><c:out value="${item.item_name}" /></option>																				
 													</c:otherwise>
 												</c:choose>
 				                              </c:forEach>
@@ -311,7 +316,7 @@
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">취소</button>
-							        <button type="button" class="btn btn-primary">BOM 등록</button>
+							        <button type="button" id="btnRegister" class="btn btn-primary">BOM 등록</button>
 							      </div>
 							    </div>
 							  </div>
@@ -319,7 +324,7 @@
                           <hr />
                           
                        		<div class="table-filter">
-                             <strong class="total-text">전체 <span><c:out value="${fn:length(data)}"/></span>건</strong>
+                             <strong class="total-text">전체 <span><c:out value="${fn:length(list)}"/></span>건</strong>
                              <form class="search-combo" action="/bom/list" method="post">
                                 <!-- Dropbox UI-->
                                 <div class="search-combo-dropbox">
@@ -372,22 +377,32 @@
                                   	<c:set var="temp" value=""/>
                                   	<c:set var="check" value="true" />
 									<c:forEach items="${bom.bom_register_vo }" var="bom_rg">
+										<c:set var="k" value="${k+1 }"/>
 										<c:if test="${check }">
 											<c:choose>
 												<c:when test="${fn:length(temp) gt 15 }">
-													<c:out value="${fn:substring(temp, 0, 14)}..."/>
+													<c:set var="temp" value="${fn:substring(temp, 0, 14)}..."/>
 													<c:set var="check" value="false"/>
 												</c:when>														
 												<c:otherwise>
-				                                  	<c:set var="temp" value="${temp}${bom_rg.item_vo.item_name}, "/>
+													<c:choose>
+														<c:when test="${k eq 1}">
+						                                  	<c:set var="temp" value="${temp}${bom_rg.item_vo.item_name}"/>													
+														</c:when>
+														<c:otherwise>
+						                                  	<c:set var="temp" value="${temp}, ${bom_rg.item_vo.item_name}"/>													
+														</c:otherwise>
+													</c:choose>
 												</c:otherwise>	
 											</c:choose>	
 										</c:if>
 									</c:forEach>
+									<c:remove var="k"/>
+									<c:out value="${temp }"/>
                                   </td>
                                   <td class="td-btn">
 	                                  <a class="bom-edit-btn move" href="${bom.bom_code}"><i class="bx bx-edit-alt me-1"></i>수정</a>
-	                                  <a class="bom-del-btn" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>삭제</a>
+	                                  <a class="bom-del-btn" href="${bom.bom_code}"><i class="bx bx-trash me-1"></i>삭제</a>
                                   </td>
                                 </tr>
                               	<tr>
@@ -553,6 +568,123 @@
 				actionForm.attr("action", "/bom/get");
 				actionForm.submit();
 			
+			});
+			
+			$(document).on("click",".bom-del-btn", function(e) {
+				e.preventDefault();				
+				var bomCode = $(this).attr("href");
+				var requestData = {
+						bomCode : bomCode,
+					};
+				
+				$.ajax({
+					type:"POST",
+					contentType: "application/json",
+					url : "/bom/delete",
+					data: JSON.stringify(requestData),
+					dataType:"json",
+					success: function(response) {
+		                if (response.success) {
+		                	window.location.href = "/bom/list";
+		                } else {
+		                    // Handle error
+		                }
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.log("AJAX 오류:", textStatus, errorThrown);
+		            }
+				});
+				
+			});
+			
+			
+			$("#item_name_input").on("keypress",function() {
+				var itemName = $(this).val();
+				var $row = $("#item_name").find("option");
+				
+				var requestData = {
+					itemName : itemName,
+				};
+				
+				$.ajax({
+					type:"POST",
+					contentType: "application/json",
+					url : "/bom/search-product",
+					data: JSON.stringify(requestData),
+					dataType:"json",
+					success: function(response) {
+		                if (response.success) {
+		                    $row.remove();
+		                    
+							if(response.items.length > 0){
+								$.each(response.items, function(index,el) {
+									var newRowHtml = "";
+									if(index == 0){
+					                    newRowHtml = `
+					                    	<option value=`+el.item_code+` selected>`+el.item_name+`</option>
+					                    `;
+									} else {
+					                    newRowHtml = `
+					                    	<option value=`+el.item_code+`>`+el.item_name+`</option>
+					                    `;
+										
+									}
+									$("#item_name").append(newRowHtml);
+								});
+								
+							}
+		                } else {
+		                    // Handle error
+		                }
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.log("AJAX 오류:", textStatus, errorThrown);
+		            }
+					
+					
+				});
+				
+			});
+			
+			
+			$("#btnRegister").on("click",function() {
+				
+				var itemCode = $("#item_name option:selected").val();
+				var productName = $("#product_name").val();
+				
+				var requestData = {
+					itemCode : itemCode,
+					productName : productName
+				};
+               	if(productName == ""){
+               		alert("제품명을 입력해주세요.");
+               	} else {
+               		
+					$.ajax({
+						type:"POST",
+						contentType: "application/json",
+						url : "/bom/new-bom",
+						data: JSON.stringify(requestData),
+						dataType:"json",
+						success: function(response) {
+			                if (response.success) {
+			                	
+			                	window.location.href = "/bom/get?bom_code="+response.newBomCode;
+			                	
+			                } else {
+			                    // Handle error
+			                }
+			            },
+			            error: function(jqXHR, textStatus, errorThrown) {
+			                console.log("AJAX 오류:", textStatus, errorThrown);
+			            }
+						
+						
+					});
+               		
+               	}
+				
+				
 			});
 		});
     

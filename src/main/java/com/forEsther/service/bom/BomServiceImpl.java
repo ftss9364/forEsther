@@ -53,41 +53,41 @@ public class BomServiceImpl implements BomService {
 	}
 
 	@Override
-	public void register_bom(BomVO bom_vo) {
+	public void registerBom(BomVO bom_vo) {
 
 		log.info("register_bom----------------------------------------");
-		mapper.insert_bom(bom_vo);
+		mapper.insertBom(bom_vo);
 	}
 
 	@Override
-	public void register_bom_registration(BomRegistrationVO bomregistration_vo) {
+	public void registerBomRegistration(BomRegistrationVO bomregistration_vo) {
 		log.info("register_bom_registration---------------------------------");
-		mapper.insert_bom_registration(bomregistration_vo);
+		mapper.insertBomRegistration(bomregistration_vo);
 		
 	}
 
 	@Override
-	public boolean remove_bom(String bom_code) {
+	public boolean removeBom(String bom_code) {
 
 		log.info("remove_bom--------------------------");
 		
-		return mapper.delete_bom(bom_code) == 1;
+		return mapper.deleteBom(bom_code) == 1;
 	}
 
 	@Override
-	public boolean remove_bom_to_bom_registration(String bom_code) {
+	public boolean removeBomToBomRegistration(String bom_code) {
 
 		log.info("remove_bom_to_bom_registration------------------------------------");
 		
-		return mapper.delete_bom_to_bom_registration(bom_code) == 1;
+		return mapper.deleteBomToBomRegistration(bom_code) == 1;
 	}
 
 	@Override
-	public boolean remove_bom_registration(String bom_registration_code) {
+	public boolean removeBomRegistration(String bom_registration_code) {
 
 		log.info("remove_bom_registration-------------------------");
 		
-		return mapper.delete_bom_registration(bom_registration_code) == 1;
+		return mapper.deleteBomRegistration(bom_registration_code) == 1;
 	}
 
 	@Override
@@ -126,6 +126,45 @@ public class BomServiceImpl implements BomService {
 
 		log.info("searchItem.......................");
 		return mapper.searchItem(item_name);
+	}
+
+	@Override
+	public List<BomRegistrationVO> getBomRegistration(String bom_code) {
+
+		log.info("getBomRegistration............................");
+		return mapper.getBomRegistration(bom_code);
+	}
+
+	@Override
+	public boolean modifyBomRegistration(int required_quantity, String bom_registration_code) {
+
+		log.info("modifyBomRegistration......................");
+		
+		return mapper.updateBomRegistration(required_quantity, bom_registration_code) == 1;
+	}
+
+	@Override
+	public List<ItemVO> searchProduct(String item_name) {
+		
+		log.info("searchProduct........................");
+		
+		return mapper.searchProduct(item_name);
+	}
+
+	@Override
+	public List<BomVO> getBomList() {
+		
+		log.info("getBomList.................");
+		
+		return mapper.getBomList();
+	}
+
+	@Override
+	public BomVO getBom(String bom_code) {
+
+		log.info("getBom....................");
+		
+		return mapper.getBom(bom_code);
 	}
 
 

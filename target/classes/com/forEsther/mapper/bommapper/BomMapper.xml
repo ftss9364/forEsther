@@ -59,26 +59,34 @@
 		ORDER BY bom_registration_code
   	</select>
   	
-  	<insert id="insert_bom_registration">
+  	<select id="getBom" resultType="com.forEsther.vo.bomvo.BomVO">
+  		select * from tbl_bom where bom_code = #{bom_code}
+  	</select>
+  	
+  	<insert id="insertBomRegistration">
   		insert into tbl_bom_registration (bom_registration_code, bom_code, item_code, required_quantity)
   		values (#{bom_registration_code}, #{bom_code}, #{item_code}, #{required_quantity})
   	</insert>
   	
-  	<insert id="insert_bom">
+  	<select id="getBomList" resultType="com.forEsther.vo.bomvo.BomVO">
+  		select * from tbl_bom
+  	</select>
+  	
+  	<insert id="insertBom">
   		insert into tbl_bom (bom_code, product_name)
   		values (#{bom_code}, #{product_name})
   	</insert>
   	
-  	<delete id="delete_bom">
+  	<delete id="deleteBom">
   		delete from tbl_bom where bom_code = #{bom_code}
   	</delete>
   	
   	
-  	<delete id="delete_bom_to_bom_registration">
+  	<delete id="deleteBomToBomRegistration">
   		delete from tbl_bom_registration where bom_code = #{bom_code}
   	</delete>
   	
-  	<delete id="delete_bom_registration">
+  	<delete id="deleteBomRegistration">
   		delete from tbl_bom_registration where bom_registration_code = #{bom_registration_code}
   	</delete>
   	
@@ -98,5 +106,16 @@
   	<select id="searchItem" resultType="com.forEsther.vo.itemvo.ItemVO">
   		select * from tbl_items where item_name like (#{item_name}) and item_classification != '제품'
   	</select>
+  	<select id="searchProduct" resultType="com.forEsther.vo.itemvo.ItemVO">
+  		select * from tbl_items where item_name like (#{item_name}) and item_classification = '제품'
+  	</select>
+  	
+  	<select id="getBomRegistration" resultType="com.forEsther.vo.bomregistrationvo.BomRegistrationVO">
+  		select * from tbl_bom_registration where bom_code = #{bom_code}
+  	</select>
+  	
+  	<update id="updateBomRegistration">
+  		update tbl_bom_registration set required_quantity = #{required_quantity} where bom_registration_code = #{bom_registration_code}
+  	</update>
   	
 </mapper>

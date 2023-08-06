@@ -134,7 +134,7 @@
           <!-- Menu list -->
           <ul class="menu-inner py-1">
             <!-- 대시보드 -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
@@ -143,7 +143,7 @@
             <!-- // 대시보드 -->
 
             <!-- 재고관리 -->
-            <li class="menu-item">
+            <li class="menu-item active open">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">재고관리</div>
@@ -155,7 +155,7 @@
                     <div data-i18n="Without menu">품목관리</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                   <a href="index.html" class="menu-link">
                     <div data-i18n="Without navbar">BOM관리</div>
                   </a>
@@ -269,6 +269,8 @@
                           <header class="page-header">
                             <h2 class="page-title text-primary">BOM 상세정보</h1>
                             <div>
+                            	<button type="button" id="btnCancle" class="btn btn-outline-primary">취소</button>
+                            	<button type="button" id="btnRegistration" class="btn btn-primary">BOM 등록</button>
                             </div>
                           </header>
                           <hr />
@@ -312,14 +314,14 @@
                                 <tr>
                                   <td><c:out value="${i}"></c:out></td>
                                   <td class="td-box">
-                                  	<a class="move" href="${list.item_code}"><c:out value="${list.item_code}"/></a>
+                                  	<a class="item-code move" href="${list.item_code}"><c:out value="${list.item_code}"/></a>
                                   </td>
-                                  <td><c:out value="${list.item_vo.item_name}"/></td>
+                                  <td class="item-name"><c:out value="${list.item_vo.item_name}"/></td>
                                   <td><c:out value="${list.item_vo.item_specification}"/></td>
                                   <td>
-	                                  <input type="text" value="${list.required_quantity }" />
+	                                  <input class="item-required-quantity" type="text" value="${list.required_quantity }" />
                                   </td>
-                                  <td>
+                                  <td class="td-btn">
                                   	<button type="button" class="btn rounded-pill btn-icon btn-danger minus-btn">
                                          <i class="bx bx-minus"></i>
                                       </button> 
@@ -391,7 +393,7 @@
                                   </td>
                                   <td><c:out value="${item.item_name}"/></td>
                                   <td><c:out value="${item.item_specification}"/></td>
-                                  <td class="td-plusbtn">
+                                  <td class="td-btn">
                                   	<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
                                          <i class="bx bx-plus"></i>
                                       </button> 
@@ -479,6 +481,7 @@
     <script src="../resources/assets/js/pages/index.js"></script>
     <script type="text/javascript">
     	$(function () {
+    		var bomCode = $("#bom_code").val();
 			$(document).on("click",".plus-btn", function() {
 				var $row = $(this).closest("tr");
 				var itemCode = $row.find("td:nth-child(2) a").attr("href");
@@ -496,15 +499,15 @@
 		                        <tr>
 		                            <td></td>
 		                            <td class="td-box">
-		                                <a class="move" href="`+response.item.item_code+`">`+response.item.item_code+`</a>
+		                                <a class="item-code move" href="`+response.item.item_code+`">`+response.item.item_code+`</a>
 		                            </td>
-		                            <td>`+response.item.item_name+`</td>
+		                            <td class="item-name">`+response.item.item_name+`</td>
 		                            <td>`+response.item.item_specification+`</td>
 		                            <td>
-		                                <input type="text" value="0" />
+		                                <input class="item-required-quantity" type="text" value="0" />
 		                            </td>
-		                            <td>
-                                  	<button type="button" class="btn rounded-pill btn-icon btn-danger minus-btn">
+		                            <td class="td-btn">
+                                  		<button type="button" class="btn rounded-pill btn-icon btn-danger minus-btn">
                                          <i class="bx bx-minus"></i>
                                       </button> 
                                   </td>
@@ -551,8 +554,8 @@
 		                            </td>
 		                            <td>`+response.item.item_name+`</td>
 		                            <td>`+response.item.item_specification+`</td>
-		                            <td>
-                                  	<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
+		                            <td class="td-btn">
+                                  		<button type="button" class="btn rounded-pill btn-icon btn-info plus-btn">
                                          <i class="bx bx-plus"></i>
                                       </button> 
                                   </td>
@@ -581,7 +584,7 @@
 			$("#item_name_input").on("keypress",function() {
 				var itemName = $(this).val();
 				var $row = $(".table-2 tbody").find("tr");
-				var bomCode = $("#bom_code").val();
+				
 				var row2 = $(".table-1 tbody tr").find(".move");
 				var ItemCodeArr = [];
 				
@@ -640,6 +643,71 @@
 					
 				});
 				
+			});
+			
+			$(document).on("click","#btnRegistration", function () {
+	            // 테이블의 각 행 데이터를 배열에 저장
+	            var rowDataList = [];
+	            
+	            if($(".item-table.table-1 tbody tr").html() != null){
+		            $(".item-table.table-1 tbody tr").each(function () {
+		            	var itemRequiredQuantity = $(this).find(".item-required-quantity").val() 
+		            	if(itemRequiredQuantity != 0){
+		            		console.log(itemRequiredQuantity);
+			                var rowData = {
+			                	bomCode : bomCode,
+			                    itemCode: $(this).find(".item-code").text(),
+			                    itemName: $(this).find(".item-name").text(),
+			                    itemRequiredQuantity : itemRequiredQuantity
+			                    // 필요한 다른 데이터도 추가 가능
+			                };
+			                rowDataList.push(rowData);
+		            	}
+		            });
+	            	
+	            } else {
+	                var rowData = {
+	                	bomCode : bomCode,
+	                    itemCode: "null",
+	                    itemName: "null",
+	                    itemRequiredQuantity : "null"
+	                    // 필요한 다른 데이터도 추가 가능
+	                };
+	                rowDataList.push(rowData);
+            		
+	            	
+	            }
+	            
+	            if(rowDataList.length == 0){
+	            	var rowData = {
+	                	bomCode : bomCode,
+	                    itemCode: "null",
+	                    itemName: "null",
+	                    itemRequiredQuantity : "null"
+	                    // 필요한 다른 데이터도 추가 가능
+	                };
+	                rowDataList.push(rowData);
+	            }
+	            
+
+	            // AJAX 요청 보내기
+	            $.ajax({
+	                type: "POST",
+	                url: "/bom/register", // 컨트롤러의 URL
+	                data: JSON.stringify(rowDataList),
+	                contentType: "application/json",
+	                success: function () {
+	                    // 성공 시 리다이렉트
+	                    window.location.href = "/bom/list";
+	                },
+	                error: function () {
+	                    alert("오류가 발생했습니다.");
+	                }
+	            });
+	        });
+			
+			$(document).on("click","#btnCancle", function (){
+				window.location.href = "/bom/list";
 			});
     		
 		});
