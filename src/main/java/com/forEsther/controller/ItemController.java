@@ -44,11 +44,7 @@ public class ItemController {
 		return "pages/item/itemList";
 	}
 
-	@PostMapping("/remove")
-	public void removeItem(@RequestParam("itemCode") String itemCode) {
-		log.info("[POST/Controller] 품목 삭제 ...");
-		service.removeItem(itemCode);
-	}
+
 	
 //	@PostMapping("/register")
 //	public String registerItem (@RequestParam("itemCode") String itemCode ) {

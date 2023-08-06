@@ -193,7 +193,10 @@ deleteBtnEls.forEach(btn => {
         itemCode: e.currentTarget.value
       },
       success: function(result) {
-        console.log('품목 삭제 요청 성공...')
+        console.log('품목 삭제 요청 성공...');
+        if(result == 'success') {
+          location.href = '/item/list';
+        }
       },
       error: function() {
         console.log('품목 삭제 요청 에러...');

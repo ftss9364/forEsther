@@ -157,10 +157,10 @@
 																			</button>
 																			<div class="dropdown-menu">
 																				<button type="button" class="dropdown-item edit-btn"  value="${item.item_code}">
-																						<i class="bx bx-edit-alt me-1"></i> Edit
+																						<i class="bx bx-edit-alt me-1"></i> 수정
 																					</button> 
 																				<button type="button" class="dropdown-item delete-btn"  value="${item.item_code}">
-																					<i class="bx bx-trash me-1"></i> Delete
+																					<i class="bx bx-trash me-1"></i> 삭제
 																				</button>
 																			</div>
 																		</div>

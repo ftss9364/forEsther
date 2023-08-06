@@ -42,4 +42,13 @@ public class ItemRestController {
 		return result == 1 ? new ResponseEntity<String>("success", HttpStatus.OK)
                 : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@PostMapping("/remove")
+	public ResponseEntity<String> removeItem(@RequestParam("itemCode") String itemCode) {
+		log.info("[POST/Controller] 품목 삭제 ...");
+		log.info(itemCode);
+		int result = service.removeItem(itemCode);
+		return result == 1 ? new ResponseEntity<String>("success", HttpStatus.OK)
+                : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

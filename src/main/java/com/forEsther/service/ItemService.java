@@ -21,7 +21,7 @@ public interface ItemService {
 	public int registerItem(JsonItemVO item);
 	
 	// 품목 삭제
-	public boolean removeItem(String itemCode);
+	public int removeItem(String itemCode);
 	
 
 }

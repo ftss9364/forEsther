@@ -42,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public boolean removeItem(String itemCode) {
+	public int removeItem(String itemCode) {
 		log.info("[post/Service] removeItem...");
 		return mapper.removeItem(itemCode);
 	}
