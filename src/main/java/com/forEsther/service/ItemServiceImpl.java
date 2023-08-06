@@ -22,18 +22,29 @@ public class ItemServiceImpl implements ItemService {
 		log.info("[GET/Service] getItemList...");
 		return mapper.getItemList(); 
 	}
+	
+	@Override
+	public ItemVO getItemDetail(String itemCode) {
+		log.info("[GET/Service] getItemDetail...");
+		return mapper.getItemDetail(itemCode);
+	}
 
 	@Override
 	public List<ItemVO> searchItem(String searchType, String searchValue) {
 		log.info("[GET/Service] searchItem...");
-		return mapper.searchItem(searchValue);
-		
+		return mapper.searchItem(searchType, searchValue);
 	}
 
 	@Override
-	public void registerItem(JsonItemVO item) {
-		log.info("[GET/Service] registerItem...");
-		mapper.registerItem(item);
+	public int registerItem(JsonItemVO item) {
+		log.info("[POST/Service] registerItem...");
+		return mapper.registerItem(item);
+	}
+
+	@Override
+	public boolean removeItem(String itemCode) {
+		log.info("[post/Service] removeItem...");
+		return mapper.removeItem(itemCode);
 	}
 
 }

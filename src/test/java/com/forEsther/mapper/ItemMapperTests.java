@@ -24,9 +24,11 @@ public class ItemMapperTests {
 	
 	@Test
 	public void test() {
-		
-//		mapper.getItemList().forEach(item -> log.info(item));
-		//mapper.searchItem("품목명", "P-002");
+		//mapper.registerItem(null);
+		//mapper.getItemList().forEach(item -> log.info(item));
+		mapper.searchItem("구매처명", "에스");
+		//mapper.removeItem("M-006");
+		//mapper.getItemDetail("M-001");
 	}
 
 }

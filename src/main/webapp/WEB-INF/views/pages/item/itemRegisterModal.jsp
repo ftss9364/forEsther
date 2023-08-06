@@ -1,6 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div class="modal fade" id="largeModal" tabindex="-1"
+<div class="modal fade" id="registerModal" tabindex="-1"
 	style="display: none;" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 		<form class="modal-content" action="/item/register" method="post">
@@ -75,6 +75,7 @@
 								</button> 
 							</div>
 							<!-- / Search UI -->
+							<!-- <span class="warning-text visible-hidden"><i class='bx bx-error-circle'></i>올바른 값을 입력하세요</span> -->
 						</div>
 						<div class="mb-2 visible-hidden">
 							<label for="contact-person" class="form-label">담당자명</label>

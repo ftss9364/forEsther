@@ -11,8 +11,7 @@
 	data-template="vertical-menu-template-free">
 <head>
 <meta charset="utf-8" />
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
@@ -54,8 +53,9 @@
 <!-- Page CSS -->
 <!-- ### 커스텀 css 파일 삽입 위치 ###-->
 <link rel="stylesheet" href="../resources/assets/css/common/styles.css" />
-<link rel="stylesheet" href="../resources/assets/css/pages/itemList.css" />
-<link rel="stylesheet" href="../resources/assets/css/components/modal.css" />
+<link rel="stylesheet" href="../resources/assets/css/pages/item/itemList.css" />
+<link rel="stylesheet" href="../resources/assets/css/pages/item/itemRegisterModal.css" />
+<link rel="stylesheet" href="../resources/assets/css/pages/item/itemDetailModal.css" />
 
 <!-- Helpers -->
 <script src="../resources/assets/vendor/js/helpers.js"></script>
@@ -69,161 +69,8 @@
 	<!-- Layout wrapper -->
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
-
 			<!-- 메뉴 (Side Bar) -->
-			<aside id="layout-menu"
-				class="layout-menu menu-vertical menu bg-menu-theme">
-
-				<!-- LOGO -->
-				<div class="app-brand demo logo-link">
-					<a href="index.html" class="app-brand-link"> <span
-						class="app-brand-logo demo"> <svg width="25"
-								viewBox="0 0 25 42" version="1.1"
-								xmlns="http://www.w3.org/2000/svg"
-								xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <defs>
-                    <path
-									d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
-									id="path-1"></path>
-                    <path
-									d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
-									id="path-3"></path>
-                    <path
-									d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
-									id="path-4"></path>
-                    <path
-									d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
-									id="path-5"></path>
-                  </defs>
-                  <g id="g-app-brand" stroke="none" stroke-width="1"
-									fill="none" fill-rule="evenodd">
-                    <g id="Brand-Logo"
-									transform="translate(-27.000000, -15.000000)">
-                      <g id="Icon"
-									transform="translate(27.000000, 15.000000)">
-                        <g id="Mask"
-									transform="translate(0.000000, 8.000000)">
-                          <mask id="mask-2" fill="white">
-                            <use xlink:href="#path-1"></use>
-                          </mask>
-                          <use fill="#004dc1" xlink:href="#path-1"></use>
-                          <g id="Path-3" mask="url(#mask-2)">
-                            <use fill="#004dc1" xlink:href="#path-3"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF"
-									xlink:href="#path-3"></use>
-                          </g>
-                          <g id="Path-4" mask="url(#mask-2)">
-                            <use fill="#004dc1" xlink:href="#path-4"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF"
-									xlink:href="#path-4"></use>
-                          </g>
-                        </g>
-                        <g id="Triangle"
-									transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) ">
-                          <use fill="#004dc1" xlink:href="#path-5"></use>
-                          <use fill-opacity="0.2" fill="#FFFFFF"
-									xlink:href="#path-5"></use>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-					</span> <span class="app-brand-text demo menu-text fw-bolder ms-2">forEsther</span>
-					</a>
-				</div>
-				<!-- // LOGO -->
-
-				<!-- Menu list -->
-				<ul class="menu-inner py-1">
-					<!-- 대시보드 -->
-					<li class="menu-item active"><a href="index.html"
-						class="menu-link"> <i
-							class="menu-icon tf-icons bx bx-home-circle"></i>
-							<div data-i18n="Analytics">대시보드</div>
-					</a></li>
-					<!-- // 대시보드 -->
-
-					<!-- 재고관리 -->
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link menu-toggle"> <i
-							class="menu-icon tf-icons bx bx-layout"></i>
-							<div data-i18n="Layouts">재고관리</div>
-					</a>
-
-						<ul class="menu-sub">
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without menu">품목관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without navbar">BOM관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Container">SERIAL LOT관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Fluid">단가관리</div>
-							</a></li>
-						</ul></li>
-					<!-- // 재고관리 -->
-
-					<!-- 생산관리 -->
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link menu-toggle"> <i
-							class="menu-icon tf-icons bx bx-layout"></i>
-							<div data-i18n="Layouts">생산관리</div>
-					</a>
-
-						<ul class="menu-sub">
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without menu">생산계획서관리</div>
-							</a></li>
-						</ul></li>
-					<!-- // 생산관리 -->
-
-					<!-- 구매관리 -->
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link menu-toggle"> <i
-							class="menu-icon tf-icons bx bx-layout"></i>
-							<div data-i18n="Layouts">구매관리</div>
-					</a>
-
-						<ul class="menu-sub">
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without menu">재고리스트</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without navbar">발주계획서관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Container">발주서관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Fluid">구매전표관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Fluid">입고관리</div>
-							</a></li>
-						</ul></li>
-					<!-- // 구매관리 -->
-
-					<!-- 판매관리 -->
-					<li class="menu-item"><a href="javascript:void(0);"
-						class="menu-link menu-toggle"> <i
-							class="menu-icon tf-icons bx bx-layout"></i>
-							<div data-i18n="Layouts">판매관리</div>
-					</a>
-
-						<ul class="menu-sub">
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without menu">주문서관리</div>
-							</a></li>
-							<li class="menu-item"><a href="index.html" class="menu-link">
-									<div data-i18n="Without menu">배송관리</div>
-							</a></li>
-						</ul></li>
-					<!-- // 판매관리 -->
-				</ul>
-			</aside>
+			<%@ include file="../../components/menuBar.jsp" %>
 			<!-- // 메뉴 -->
 
 			<!-- Layout container -->
@@ -241,14 +88,14 @@
 												<!-- page header -->
 												<header class="page-header">
 													<h2 class="page-title text-primary">품목 조회</h2>
-													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">신규등록</button>
-													<%@ include file="../components/modal.jsp" %>
+													<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">신규등록</button>
+												
 												</header>
 												<hr />
 
 												<div class="table-filter">
 													<strong class="total-text">전체 <span><c:out value="${fn:length(data)}"/></span>건</strong>
-													<form class="search-combo" action="/item/search" method="post">
+													<form class="search-combo" action="/item/search" method="get">
 														<!-- Dropbox UI-->
 														<div class="search-combo-dropbox">
 															<select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
@@ -290,9 +137,11 @@
 															<c:forEach items="${data}" var="item" varStatus="status">
 																<tr>
 																	<td><c:out value="${status.index+1}" /></td>
-																	<td><a href="#" class="text-link"> <c:out
-																				value="${item.item_code}" />
-																	</a></td>
+																	<td>
+																		<button type="button" class="itemCode-btn" data-bs-toggle="modal" data-bs-target="#detailModal" value="${item.item_code}">
+																			<c:out	value="${item.item_code}" />
+																		</button>
+																	</td>
 																	<td><c:out value="${item.item_classification}" />
 																	</td>
 																	<td><c:out value="${item.item_name}" /></td>
@@ -307,10 +156,12 @@
 																				<i class="bx bx-dots-vertical-rounded"></i>
 																			</button>
 																			<div class="dropdown-menu">
-																				<a class="dropdown-item" href="javascript:void(0);"><i
-																					class="bx bx-edit-alt me-1"></i> Edit</a> <a
-																					class="dropdown-item" href="javascript:void(0);"><i
-																					class="bx bx-trash me-1"></i> Delete</a>
+																				<button type="button" class="dropdown-item edit-btn"  value="${item.item_code}">
+																						<i class="bx bx-edit-alt me-1"></i> Edit
+																					</button> 
+																				<button type="button" class="dropdown-item delete-btn"  value="${item.item_code}">
+																					<i class="bx bx-trash me-1"></i> Delete
+																				</button>
 																			</div>
 																		</div>
 																	</td>
@@ -375,9 +226,193 @@
 
 					<div class="content-backdrop fade"></div>
 				</div>
-				<!-- Content wrapper -->
+				<!-- / Content wrapper -->
 			</section>
 			<!-- / Layout page -->
+
+			<!-- Detail Modal -->
+			<div
+				class="modal fade"
+				id="detailModal"
+				tabindex="-1"
+				style="display: none"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+					<form class="modal-content" action="/item/register" method="post">
+						<header class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel3">품목 상세정보</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</header>
+						<hr />
+						<section class="modal-body">
+							<div class="row">
+								<!-- 좌측 column -->
+								<section class="col-md">
+									<h4 class="modal-sub-title">품목 정보</h4>
+									<div class="data-container"></div>
+									<div class="data-container"></div>
+									<div class="data-container"></div>
+									<div class="data-container"></div>
+									<div class="data-container"></div>
+									<div class="data-container"></div>
+								</section>
+								<!-- 우측 column -->
+								<section class="col-md">
+									<h4 class="modal-sub-title">구매처 정보</h4>
+									<div class="list-container">
+										<!-- Table -->
+										<div class="table-responsive text-nowrap">
+											<table class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>구매처코드</th>
+														<th>구매처명</th>
+														<th>담당자</th>
+													</tr>
+												</thead>
+												<tbody id="supplier-tbody">
+														<tr>
+															<td>A001111</td>
+															<td>세진나라</td>
+															<td>김세진</td>
+														</tr>
+														<tr>
+															<td>A001111</td>
+															<td>세진나라</td>
+															<td>김세진</td>
+														</tr>
+												</tbody>
+											</table>
+										</div>
+										<!--/ Table UI -->
+									</div>
+								</section>
+							</div>
+						</section>
+						<footer class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-outline-secondary"
+								data-bs-dismiss="modal"
+							>
+								닫기
+							</button>
+							<button type="submit" class="btn btn-primary">수정</button>
+						</footer>
+					</form>
+				</div>
+			</div>
+			<!-- / Detail Modal -->
+
+			<!-- Register Model -->
+			<div class="modal fade" id="registerModal" tabindex="-1"
+				style="display: none;" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+					<form class="modal-content modal-register" action="/item/register" method="post">
+						<header class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel3">품목등록</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</header>
+						<hr />
+						<section class="modal-body">
+							<div class="row">
+								<!-- 좌측 column -->
+								<div class="col-md">
+									<div class="mb-2">
+										<div class="col-md">
+											<label class="form-label">품목구분</label>
+											<div class="form-radiobox-group">
+												<div class="form-check mr-2">
+													<input name="item-classification" class="form-check-input" type="radio" value="원재료" id="ingredient" checked />
+													<label class="form-label" for="ingredient" >
+														원재료
+													</label>
+												</div>
+												<div class="form-check">
+													<input name="item-classification" class="form-check-input" type="radio" value="제품" id="product" />
+													<label class="form-label" for="product">
+														제품
+													</label>
+												</div>
+												<div class="form-check">
+													<input name="item-classification" class="form-check-input" type="radio" value="상품" id="goods" />
+													<label class="form-label" for="goods">
+														상품
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="mb-2">
+										<label for="item-name" class="form-label">품목명</label>
+										<input type="text" id="item-name" class="form-control" name="item-name"/>
+									</div>
+									<div class="row mb-2">
+										<div class="col-md">
+											<label for="item-specification" class="form-label">규격</label> 
+											<input type="number" id="item-specification" class="form-control" name="item-specification-value"/>
+										</div>
+										<div class="col-md d-flex align-items-end">
+											<div class="search-combo-dropbox">
+												<select name="item-specification-unit" class="form-select" id="item-specification-unit" aria-label="Default select example">
+													<option vlaue="kg">kg</option>
+													<option value="ml">ml</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div  class="mb-2">
+										<label for="safety-stock" class="form-label">안전재고량</label>
+										<input type="text" id="safety-stock" class="form-control" />
+									</div>
+								</div>
+								<!-- 우측 column -->
+								<div class="col-md">
+									<div class="mb-2">
+										<label for="supplier_name" class="form-label">구매처명</label>
+										<!-- Search UI -->
+										<div class="input-group input-group-merge">
+											<input name="searchValue" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+											aria-describedby="basic-addon-search31" id="supplier_name"/>
+											<button type="button" class="btn btn-secondary search-btn" id="supplier-name-searchBtn">
+												<i class="bx bx-search"></i>
+											</button> 
+										</div>
+										<!-- / Search UI -->
+										<!-- <span class="warning-text visible-hidden"><i class='bx bx-error-circle'></i>올바른 값을 입력하세요</span> -->
+									</div>
+									<div class="mb-2 visible-hidden">
+										<label for="contact-person" class="form-label">담당자명</label>
+										<input type="text" id="contact-person" class="form-control" />
+									</div>
+									<div class="mb-2 visible-hidden">
+										<label for="contact-number" class="form-label">연락처</label>
+										<input type="tel" id="contact-number" class="form-control" />
+									</div>
+									<div class="mb-2 visible-hidden">
+										<label for="address" class="form-label">주소</label>
+										<input type="text" id="address" class="form-control" />
+									</div>
+								</div>
+							</div>
+						</section>
+						<footer class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary"
+								data-bs-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">등록</button>
+						</footer>
+					</form>
+				</div>
+			</div>
+			<!-- / Register Model -->
+
 		</div>
 
 		<!-- Overlay -->
@@ -410,7 +445,7 @@
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 	<!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
-	<script src="../resources/assets/js/pages/itemList.js"></script>
-	<script src="../resources/assets/js/components/modal.js"></script>
+	<script src="../resources/assets/js/pages/item/itemList.js"></script>
+	<!-- <script src="../resources/assets/js/pages/item/itemRegisterModal.js"></script> -->
 </body>
 </html>

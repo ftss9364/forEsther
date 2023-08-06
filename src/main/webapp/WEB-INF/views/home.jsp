@@ -983,6 +983,5 @@
             <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
-    <script src="../resources/assets/js/pages/index.js"></script>
   </body>
 </html>
