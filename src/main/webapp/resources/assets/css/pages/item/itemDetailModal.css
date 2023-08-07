@@ -52,3 +52,7 @@
 .list-container::-webkit-scrollbar-track{
   background-color: #eee;
 }
+
+#supplier-tbody {
+  font-size: small;
+}

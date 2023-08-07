@@ -1,8 +1,11 @@
 package com.forEsther.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.forEsther.mapper.ItemMapper;
 import com.forEsther.vo.itemvo.ItemVO;
@@ -35,12 +38,23 @@ public class ItemServiceImpl implements ItemService {
 		return mapper.searchItem(searchType, searchValue);
 	}
 
+	@Transactional(rollbackFor = {SQLException.class})
 	@Override
 	public int registerItem(JsonItemVO item) {
 		log.info("[POST/Service] registerItem...");
-		return mapper.registerItem(item);
+		try {
+			mapper.registerItem(item);
+			mapper.registerItemSupplier(item);
+		} catch(Exception e) {
+			e.printStackTrace();
+			TransactionAspectSupport.currentTransactionStatus()
+			.setRollbackOnly();
+			return 0;
+		}
+		
+		return 1;
 	}
-
+	
 	@Override
 	public int removeItem(String itemCode) {
 		log.info("[post/Service] removeItem...");

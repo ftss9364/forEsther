@@ -43,7 +43,6 @@
 	</resultMap>
 
 	<select id="getItemList" resultMap="ItemVO">
-  		<![CDATA[
   		SELECT 
 		    i.item_code,
 		    i.item_classification,
@@ -54,7 +53,6 @@
 		FROM tbl_items i
 		LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
 		LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
-  		]]>
 	</select>
 	
 	<select id="getItemDetail" resultMap="ItemVO">
@@ -100,8 +98,7 @@
             </otherwise>
         </choose>
 	</select>
-
-
+	
 	<insert id="registerItem" parameterType="com.forEsther.vo.jsonitemvo.JsonItemVO">
 		<selectKey keyProperty="item_code"
 			resultType="java.lang.String" order="BEFORE">
@@ -118,14 +115,20 @@
 			item_classification
 			= #{item_classification}
 		</selectKey>
-		INSERT INTO tbl_items (item_code, item_name,
-		item_specification,
-		safety_stock, serial_lot_status, procurement, item_classification)
-		VALUES (#{item_code}, #{item_name}, #{item_specification},
-		#{safety_stock},
-		1, #{procurement}, #{item_classification})
+		INSERT INTO tbl_items (item_code, item_name, item_specification,
+			safety_stock, serial_lot_status, procurement, item_classification)
+		VALUES (#{item_code}, #{item_name}, #{item_specification}, #{safety_stock}, 1, #{procurement}, #{item_classification})
 	</insert>
-
+	
+	<insert id="registerItemSupplier" parameterType="com.forEsther.vo.jsonitemvo.JsonItemVO" useGeneratedKeys="true" keyProperty="item_supplier_code">
+       <selectKey keyProperty="item_supplier_code" resultType="String" order="BEFORE">
+           SELECT 'IS-' || TO_CHAR(CAST(SUBSTR(MAX(item_supplier_code), 4) AS NUMBER) + 1) AS item_supplier_code FROM tbl_item_supplier
+       </selectKey>
+	    INSERT INTO tbl_item_supplier (item_supplier_code, item_code, supplier_code)
+	        VALUES (#{item_supplier_code}, #{item_code}, #{supplier_code})
+    </insert>
+	
+	
 	<delete id="removeItem">
 		DELETE FROM tbl_items WHERE item_code = #{value}
 	</delete>

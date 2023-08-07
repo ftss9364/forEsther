@@ -10,9 +10,11 @@ public class JsonItemVO {
     private String item_classification;
     private String item_specification;
     private int safety_stock;
-    private String supplier_name;
     private String contact_person;
     private String contact_number;
     private String address;
     private String procurement;
+    private String supplier_name;
+    private String supplier_code;
+    private String item_supplier_code;
 }

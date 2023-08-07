@@ -51,4 +51,10 @@ public class ItemRestController {
 		return result == 1 ? new ResponseEntity<String>("success", HttpStatus.OK)
                 : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+//	@GetMapping("/modify")
+//	public ItemVO getItemModify(@RequestParam("itemCode") String itemCode) {
+//		log.info("✅ [GET/Controller] 수정할 상품 조회 ...");
+//		return service.getItemDetail(itemCode);
+//	}
 }

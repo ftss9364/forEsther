@@ -87,8 +87,8 @@
   <!-- Menu list -->
   <ul class="menu-inner py-1">
     <!-- 대시보드 -->
-    <li class="menu-item active">
-      <a href="index.html" class="menu-link">
+    <li class="menu-item ">
+      <a href="/item/list" class="menu-link">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
         <div data-i18n="Analytics">대시보드</div>
       </a>
@@ -96,14 +96,14 @@
     <!-- // 대시보드 -->
 
     <!-- 재고관리 -->
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <li class="menu-item active">
+      <a href="/item/list;" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-layout"></i>
         <div data-i18n="Layouts">재고관리</div>
       </a>
 
       <ul class="menu-sub">
-        <li class="menu-item">
+        <li class="menu-item active">
           <a href="/item/list" class="menu-link">
             <div data-i18n="Without menu">품목관리</div>
           </a>

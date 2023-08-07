@@ -44,16 +44,6 @@ public class ItemController {
 		return "pages/item/itemList";
 	}
 
-
-	
-//	@PostMapping("/register")
-//	public String registerItem (@RequestParam("itemCode") String itemCode ) {
-//		log.info("[POST/Controller] 품목 등록 ...");
-//
-//		log.info(itemCode);
-//		//int result = service.registerItem();
-//		return "redirect: /item/list";
-//	}
 }
 
 

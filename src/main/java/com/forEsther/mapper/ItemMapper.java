@@ -18,9 +18,12 @@ public interface ItemMapper {
 	//public List<ItemVO> searchItem(String searchValue);
 	public List<ItemVO> searchItem(@Param("searchType") String searchType, @Param("searchValue") String searchValue);
 	
-	// 품목 등록
+	// 품목 등록 &&
 	public int registerItem(JsonItemVO item);
+	// && 품목구매처 등록
+	public int registerItemSupplier(JsonItemVO item);
 	
 	// 품목 삭제
 	public int removeItem(String itemCode);
+	
 }

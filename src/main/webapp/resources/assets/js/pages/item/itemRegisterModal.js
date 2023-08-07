@@ -73,33 +73,3 @@ radioBtnEls.forEach(btn => {
 itemSpecificationUnitEl.addEventListener("change", (e) => {
   itemSpecificationUnit = e.currentTarget.value;
 })
-
-// // 품목 등록 이벤트
-// formEl.addEventListener("submit", (e) => {
-//   e.preventDefault();
-
-//   data.itemName = itemNameEl.value;
-//   data.itemSpecification = itemSpecificationValueEl.value + itemSpecificationUnit;
-//   data.safetyStock = safetyStockEl.value;
-//   data.supplierName = supplierNameEl.value;
-//   data.contactPerson = contactPersonEl.value;
-//   data.contactNumber = contactNumberEl.value;
-//   data.address = addressEl.value;
-
-//   console.log(data);
-//   // $.ajax({
-//   //   url: '/item/register',
-//   //   type: 'POST',
-//   //   data: { itemCode : 'qweqwe'},
-//   //   success: function(result) {
-//   //     console.log('품목 등록 요청 성공...')
-//   //     console.log(result)
-//   //     // window.location.href = "/item/list";
-//   //   },
-//   //   error: function() {
-//   //     console.log('품목 등록 요청 에러...');
-//   //   }
-//   // });
-// })
-
-// console.log(1111)

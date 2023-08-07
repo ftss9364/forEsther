@@ -29,11 +29,13 @@ const data = {
   item_name: '',
   item_specification: '',
   safety_stock: '',
-  supplier_name: '',
-  contact_person: '',
-  contact_number: '',
   address: '',
   procurement: '',
+  supplier_name: '',
+  supplier_code: '',
+  contact_person: '',
+  contact_number: '',
+  item_supplier_code: ''
 };
 
 let itemSpecificationUnit = 'kg';
@@ -45,6 +47,10 @@ searchBtnEl.addEventListener("click", (e) => {
     type: 'GET',
     data: { searchValue: searchInputEl.value},
     success: function(result) {
+      console.log('구매코드: ' + result.supplier_code);
+      data.supplier_code = result.supplier_code;
+      console.log(data);
+
       hiddenEl.forEach(el => {
         el.classList.remove("visible-hidden");
       });
@@ -57,6 +63,7 @@ searchBtnEl.addEventListener("click", (e) => {
       contactPersonEl.setAttribute("disabled", true);
       contactNumberEl.setAttribute("disabled", true);
       addressEl.setAttribute("disabled", true);
+
     },
     error: function() {
       console.log('구매처 검색 요청 에러...');
@@ -179,7 +186,36 @@ detailBtnEls.forEach(btn => {
 // 수정 버튼 이벤트
 editBtnEls.forEach(btn => {
   btn.addEventListener("click", (e) => {
-    console.log(e.currentTarget.value);
+    console.log('click');
+    $.ajax({
+      url: '/item/detail',
+      type: 'GET',
+      data: { itemCode: e.currentTarget.value },
+      success: function(result) {
+        console.log('수정 데이터 요청 성공...');
+        const spc_value = result.item_specification.replace(/[A-Za-z]+/g, ''); 
+        const spc_unit = result.item_specification.replace(/\d+/g, '');
+
+        document.querySelector("#modify-name").value = result.item_name;
+        document.querySelector("#modify-specification").value = spc_value;
+        document.querySelector("#modify-specification-unit").value = spc_unit;
+        document.querySelector("#modify-stock").value = result.safety_stock;
+
+        console.log(item_classification);
+
+        if(result.item_classification == '원재료') {
+          document.querySelector("#ingredient").setAttribute("checked", true);
+        } else if (result.item_classification == '제품') {
+          document.querySelector("#product").setAttribute("checked", true);
+        } else if (result.item_classification == '상품') {
+          document.querySelector("#goods").setAttribute("checked", true);
+        }
+
+      },
+      error: function() {
+        console.log('수정 데이터 요청 에러...');
+      }
+    });
   })
 })
 
@@ -202,5 +238,13 @@ deleteBtnEls.forEach(btn => {
         console.log('품목 삭제 요청 에러...');
       }
     });
+  })
+})
+
+const pageBtnEls = document.querySelectorAll(".page-link");
+
+pageBtnEls.forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    console.log(e.currentTarget)
   })
 })
