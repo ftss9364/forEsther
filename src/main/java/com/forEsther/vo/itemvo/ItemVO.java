@@ -1,5 +1,7 @@
 package com.forEsther.vo.itemvo;
 
+import com.forEsther.vo.itemsuppliervo.ItemSupplierVO;
+
 import lombok.Data;
 
 //품목
@@ -12,4 +14,7 @@ public class ItemVO {
     private int serial_lot_status; // 시리얼로트 여부
     private String procurement; // 조달 (조달정보 -> 조달 or 생산)
     private String item_classification; // 품목구분 (원재료, 제품, 생산)
+    
+    private ItemSupplierVO itemsupplier_vo;
+    
 }
