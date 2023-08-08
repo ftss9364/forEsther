@@ -34,13 +34,13 @@ public class BomControllerTests {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 
-	@Test
-	public void testList() throws Exception {
-		
-		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/bom/bomList"))
-				.andReturn().getModelAndView().getModelMap());
-		
-	}
+//	@Test
+//	public void testList() throws Exception {
+//		
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/bom/bomList"))
+//				.andReturn().getModelAndView().getModelMap());
+//		
+//	}
 
 //	@Test
 //	public void testGet() throws Exception {

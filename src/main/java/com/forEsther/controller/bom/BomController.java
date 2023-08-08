@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.forEsther.service.bom.BomService;
 import com.forEsther.vo.bomregistrationvo.BomRegistrationVO;
 import com.forEsther.vo.bomvo.BomVO;
+import com.forEsther.vo.bomvo.Criteria;
+import com.forEsther.vo.bomvo.PageDTO;
 import com.forEsther.vo.itemvo.ItemVO;
 
 import lombok.AllArgsConstructor;
@@ -32,20 +34,47 @@ public class BomController {
 	
 	private BomService service;
 	
+//	@GetMapping("/list")
+//	public String list(Model model) {
+//		log.info("list-----------------");
+//		model.addAttribute("list", service.getList());
+//		model.addAttribute("item_list", service.getBomItemList());
+//		return "bom/bomList";
+//	}
+	
 	@GetMapping("/list")
-	public String list(Model model) {
-		log.info("list-----------------");
-		model.addAttribute("list", service.getList());
+	public String list(Criteria cri ,Model model) {
+		log.info("list : " + cri);
+		int total = service.getTotal();
+		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("item_list", service.getBomItemList());
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("bomRegList", service.getBomRegList());
+		model.addAttribute("total", total);
 		return "bom/bomList";
 	}
 	
+//	@PostMapping("/list")
+//	public String search(@RequestParam("product_name") String product_name, Model model) {
+//		log.info("search-----------------------");
+//		product_name = "%" + product_name + "%";
+//		model.addAttribute("list", service.get(product_name));
+//		model.addAttribute("item_list", service.getBomItemList());
+//		
+//		return "bom/bomList";
+//	}
+	
 	@PostMapping("/list")
-	public String search(@RequestParam("product_name") String product_name, Model model) {
+	public String search(@RequestParam("product_name") String product_name, Model model, Criteria cri) {
 		log.info("search-----------------------");
+		
 		product_name = "%" + product_name + "%";
-		model.addAttribute("list", service.get(product_name));
+		int total = service.getCount(product_name);
+		model.addAttribute("list", service.searchBom(product_name, cri));
 		model.addAttribute("item_list", service.getBomItemList());
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("bomRegList", service.getBomRegList());
+		model.addAttribute("total", total);
 		
 		return "bom/bomList";
 	}
@@ -97,7 +126,6 @@ public class BomController {
 		
 		log.info("---------------------------------");
 		
-		service.removeBomToBomRegistration((String)requestData.get("bomCode"));
 		service.removeBom((String)requestData.get("bomCode"));
 		
 		Map<String, Object> response = new HashMap<>();
@@ -140,13 +168,11 @@ public class BomController {
 	public ResponseEntity<Map<String, Object>> searchProduct(@RequestBody Map<String, Object> requestData) {
 		String itemName = (String)requestData.get("itemName");
 		itemName = "%"+itemName+"%";
-		
 		List<ItemVO> itemList = service.searchProduct(itemName);
-		
 		Map<String, Object> response = new HashMap<>();
+		
 		response.put("success", true);
 		response.put("items", itemList);
-		
 		return ResponseEntity.ok(response);
 	}
 	
@@ -205,7 +231,6 @@ public class BomController {
 		
 		if(rowDataList.get(0).get("itemCode").equals("null")) {
 			
-			service.removeBomToBomRegistration(rowDataList.get(0).get("bomCode"));
 			service.removeBom(rowDataList.get(0).get("bomCode"));
 			
 		} else {

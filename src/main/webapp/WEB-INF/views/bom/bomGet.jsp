@@ -485,8 +485,6 @@
 			$(document).on("click",".plus-btn", function() {
 				var $row = $(this).closest("tr");
 				var itemCode = $row.find("td:nth-child(2) a").attr("href");
-				
-				
 				$.ajax({
 					type:"POST",
 					url : "/bom/plus",
@@ -527,8 +525,6 @@
 		            error: function(jqXHR, textStatus, errorThrown) {
 		                console.log("AJAX 오류:", textStatus, errorThrown);
 		            }
-					
-					
 				});
 				
 			});

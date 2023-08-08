@@ -269,7 +269,7 @@
                           <header class="page-header">
                             <h2 class="page-title text-primary">BOM 관리</h2>
                             <!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">신규작성</button>
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">신규 등록</button>
                           </header>
                           
                           <!-- Modal -->
@@ -324,20 +324,20 @@
                           <hr />
                           
                        		<div class="table-filter">
-                             <strong class="total-text">전체 <span><c:out value="${fn:length(list)}"/></span>건</strong>
+                             <strong class="total-text">전체 <span><c:out value="${total}"/></span>건</strong>
                              <form class="search-combo" action="/bom/list" method="post">
                                 <!-- Dropbox UI-->
                                 <div class="search-combo-dropbox">
                                    <select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
                                       <option vlaue="품목명">모품목명</option>
-                                      <option value="구매처명">구매처명</option>
+                                      <option value="BOM코드">BOM코드</option>
                                    </select>
                                 </div>
                                 <!-- / Dropbox UI-->
                                 <!-- Search UI -->
                                 <div class="search-combo-input">
                                    <div class="input-group input-group-merge">
-                                      <input name="product_name" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                                      <input name="product_name" type="text" class="form-control" placeholder="검색..." aria-label="Search..."
                                       aria-describedby="basic-addon-search31" />
                                       <button type="submit" class="btn btn-secondary search-btn">
                                          <i class="bx bx-search"></i>
@@ -362,43 +362,36 @@
                                 </tr>
                               </thead>
                               <tbody>
+                              <c:set var="i" value="${(pageMaker.cri.pageNum-1)*10 }" />
                               <c:forEach items="${list}" var="bom">
                               	<c:set var="i" value="${i+1}" />
                                 <tr>
-                                  <td><c:out value="${i}"></c:out></td>
-                                  <td class="td-box">
-                                  	<a class="move" href="${bom.bom_code}"><c:out value="${bom.bom_code}"/></a>
-                                  	<button type="button" class="btn btn-link accordion-button" data-toggle="collapse" data-target="#accordion${i}" aria-expanded="false" aria-controls="accordion${i}"><i class="fab fa-angular text-danger me-3"></i></button>
-                                  	
-                                  </td>
-                                  <td><a href=""><c:out value="${fn:substring(bom.bom_code,2,7)}"/></a></td>
-                                  <td><c:out value="${bom.product_name}"/></td>
-                                  <td>
-                                  	<c:set var="temp" value=""/>
-                                  	<c:set var="check" value="true" />
-									<c:forEach items="${bom.bom_register_vo }" var="bom_rg">
-										<c:set var="k" value="${k+1 }"/>
-										<c:if test="${check }">
-											<c:choose>
-												<c:when test="${fn:length(temp) gt 15 }">
-													<c:set var="temp" value="${fn:substring(temp, 0, 14)}..."/>
-													<c:set var="check" value="false"/>
-												</c:when>														
-												<c:otherwise>
+                                	<td><c:out value="${i}"></c:out></td>
+                                	<td class="td-box">
+                                		<a class="move" href="${bom.bom_code}"><c:out value="${bom.bom_code}"/></a>
+                                  		<button type="button" class="btn btn-link accordion-button" data-toggle="collapse" data-target="#accordion${i}" aria-expanded="false" aria-controls="accordion${i}"><i class="fab fa-angular text-danger me-3"></i></button>
+                                  	</td>
+                                  	<td><a href=""><c:out value="${fn:substring(bom.bom_code,2,7)}"/></a></td>
+                                  	<td><c:out value="${bom.product_name}"/></td>
+                                  	<td>
+	                                  	<c:set var="temp" value=""/>
+	                                  	<c:set var="check" value="true" />
+										<c:forEach items="${bomRegList }" var="bom_rg" varStatus="status">
+											<c:if test="${check }">
+												<c:if test="${bom_rg.bom_code eq bom.bom_code}">
 													<c:choose>
-														<c:when test="${k eq 1}">
-						                                  	<c:set var="temp" value="${temp}${bom_rg.item_vo.item_name}"/>													
-														</c:when>
+														<c:when test="${fn:length(temp) gt 15 }">
+															<c:set var="temp" value="${fn:substring(temp, 0, 14)}..."/>
+															<c:set var="check" value="false"/>
+														</c:when>														
 														<c:otherwise>
-						                                  	<c:set var="temp" value="${temp}, ${bom_rg.item_vo.item_name}"/>													
-														</c:otherwise>
-													</c:choose>
-												</c:otherwise>	
-											</c:choose>	
-										</c:if>
-									</c:forEach>
-									<c:remove var="k"/>
-									<c:out value="${temp }"/>
+						                                  	<c:set var="temp" value="${temp}${bom_rg.item_vo.item_name}, "/>													
+														</c:otherwise>	
+													</c:choose>	
+												</c:if>
+											</c:if>
+										</c:forEach>
+										<c:out value="${temp }"/>
                                   </td>
                                   <td class="td-btn">
 	                                  <a class="bom-edit-btn move" href="${bom.bom_code}"><i class="bx bx-edit-alt me-1"></i>수정</a>
@@ -421,15 +414,17 @@
 		                              				</tr>
 		                              			</thead>
 		                              			<tbody>
-	                              					<c:forEach items="${bom.bom_register_vo }" var="bom_rg">
-			                              				<tr>
-			                              					<td>        </td>
-															<td><a href=""><c:out value="${bom_rg.item_code}"/></a></td>
-															<td><c:out value="${bom_rg.item_vo.item_name}"/></td>
-															<td><c:out value="${bom_rg.required_quantity}"/></td>
-			                              					<td>        </td>
-			                              					<td>        </td>
-			                              				</tr>
+	                              					<c:forEach items="${bomRegList }" var="bom_rg">
+	                              						<c:if test="${bom_rg.bom_code eq bom.bom_code}">
+				                              				<tr>
+				                              					<td>        </td>
+																<td><a href=""><c:out value="${bom_rg.item_code}"/></a></td>
+																<td><c:out value="${bom_rg.item_vo.item_name}"/></td>
+																<td><c:out value="${bom_rg.required_quantity}"/></td>
+				                              					<td>        </td>
+				                              					<td>        </td>
+				                              				</tr>
+	                              						</c:if>
 													</c:forEach>
 		                              			</tbody>	
 		                              		</table>
@@ -449,41 +444,27 @@
                           <!-- Pagination UI -->
                           <nav aria-label="Page navigation">
                             <ul class="pagination">
-                              <li class="page-item first">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item prev">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">1</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">2</a>
-                              </li>
-                              <li class="page-item active">
-                                <a class="page-link" href="javascript:void(0);">3</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">4</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">5</a>
-                              </li>
-                              <li class="page-item next">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-right"></i
-                                ></a>
-                              </li>
-                              <li class="page-item last">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-right"></i
-                                ></a>
-                              </li>
+                              <c:if test="${pageMaker.prev}">
+									<li class="page-item paginate_button previous">
+										<a class="page-link" href="${pageMaker.startPage -1}">
+											<i class="tf-icon bx bx-chevron-left"></i>
+										</a>
+									</li>
+								</c:if>
+								
+								<c:forEach var="num" begin="${pageMaker.startPage}"
+									end="${pageMaker.endPage}">
+									<li class="page-item paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+										<a class="page-link" href="${num}">${num}</a>
+									</li>
+								</c:forEach>
+                             <c:if test="${pageMaker.next}">
+									<li class="page-item paginate_button next">
+										<a class="page-link" href="${pageMaker.endPage +1 }">
+											<i class="tf-icon bx bx-chevron-right"></i>
+										</a>
+									</li>
+								</c:if>
                             </ul>
                           </nav>
                           <!-- / Pagination UI -->
@@ -521,7 +502,9 @@
         <!-- / Layout page -->
       </div>
       
-      <form id='actionForm' action="/board/list" method='get'>
+      <form id='actionForm' action="/bom/list" method='get'>
+      	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
       </form>
 
               <!-- Overlay -->
@@ -601,11 +584,9 @@
 			$("#item_name_input").on("keypress",function() {
 				var itemName = $(this).val();
 				var $row = $("#item_name").find("option");
-				
 				var requestData = {
 					itemName : itemName,
 				};
-				
 				$.ajax({
 					type:"POST",
 					contentType: "application/json",
@@ -615,7 +596,6 @@
 					success: function(response) {
 		                if (response.success) {
 		                    $row.remove();
-		                    
 							if(response.items.length > 0){
 								$.each(response.items, function(index,el) {
 									var newRowHtml = "";
@@ -627,14 +607,11 @@
 					                    newRowHtml = `
 					                    	<option value=`+el.item_code+`>`+el.item_name+`</option>
 					                    `;
-										
 									}
 									$("#item_name").append(newRowHtml);
 								});
-								
 							}
 		                } else {
-		                    // Handle error
 		                }
 		            },
 		            error: function(jqXHR, textStatus, errorThrown) {
@@ -686,6 +663,19 @@
 				
 				
 			});
+			
+			$(".paginate_button a").on(
+					"click",
+					function(e) {
+
+						e.preventDefault();
+
+						console.log('click');
+
+						actionForm.find("input[name='pageNum']")
+								.val($(this).attr("href"));
+						actionForm.submit();
+					});
 		});
     
     </script>

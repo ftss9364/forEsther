@@ -6,15 +6,19 @@ import org.apache.ibatis.annotations.Param;
 
 import com.forEsther.vo.bomregistrationvo.BomRegistrationVO;
 import com.forEsther.vo.bomvo.BomVO;
+import com.forEsther.vo.bomvo.Criteria;
 import com.forEsther.vo.itemvo.ItemVO;
 
 public interface BomMapper {
 	public int getCount(String product_name);
+	public int getTotal();
 	public BomVO get(String bom_code);
 	public BomVO getBom(String bom_code);
 	public List<BomVO> getBomList();
 	public List<BomVO> getList();
 	public List<BomVO> search(String product_name);
+	public List<BomVO> searchBom(@Param("product_name") String product_name, @Param("pageNum") int pageNum, @Param("amount") int amount);
+	
 	public String getBomregCount();
 	public void insertBom(BomVO bom_vo);
 	public void insertBomRegistration(BomRegistrationVO bomregistration_vo);
@@ -28,4 +32,7 @@ public interface BomMapper {
 	public List<ItemVO> searchProduct(String item_name);
 	public List<BomRegistrationVO> getBomRegistration(String bom_code);
 	public int updateBomRegistration(@Param("required_quantity") int required_quantity,@Param("bom_registration_code") String bom_registration_code);
+	
+	public List<BomVO> getListWithPaging(Criteria cri);
+	public List<BomRegistrationVO> getBomRegList();
 }

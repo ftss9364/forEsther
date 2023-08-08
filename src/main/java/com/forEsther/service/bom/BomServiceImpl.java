@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.forEsther.mapper.bommapper.BomMapper;
 import com.forEsther.vo.bomregistrationvo.BomRegistrationVO;
 import com.forEsther.vo.bomvo.BomVO;
+import com.forEsther.vo.bomvo.Criteria;
 import com.forEsther.vo.itemvo.ItemVO;
 
 import lombok.AllArgsConstructor;
@@ -21,13 +23,27 @@ public class BomServiceImpl implements BomService {
 	@Autowired
 	private BomMapper mapper;
 	
+//	@Override
+//	public List<BomVO> getList() {
+//		
+//		log.info("getList----------------------------------");
+//		
+//		return mapper.getList();
+//	}
+
 	@Override
-	public List<BomVO> getList() {
+	public List<BomVO> getList(Criteria cri) {
 		
-		log.info("getList----------------------------------");
+		log.info("getList with criteria : " + cri);
 		
-		return mapper.getList();
+		return mapper.getListWithPaging(cri);
 	}
+	
+	@Override
+	public List<BomRegistrationVO> getBomRegList() {
+		return mapper.getBomRegList();
+	}
+	
 
 	@Override
 	public List<BomVO> get(String product_name) {
@@ -66,11 +82,11 @@ public class BomServiceImpl implements BomService {
 		
 	}
 
+	@Transactional
 	@Override
 	public boolean removeBom(String bom_code) {
-
 		log.info("remove_bom--------------------------");
-		
+		mapper.deleteBomToBomRegistration(bom_code);
 		return mapper.deleteBom(bom_code) == 1;
 	}
 
@@ -166,6 +182,27 @@ public class BomServiceImpl implements BomService {
 		
 		return mapper.getBom(bom_code);
 	}
+
+	@Override
+	public int getTotal() {
+
+		log.info("getTotal....................");
+		
+		return mapper.getTotal();
+	}
+
+	@Override
+	public List<BomVO> searchBom(String product_name, Criteria cri) {
+		
+		log.info("searchBom....................");
+		
+		
+		
+		return mapper.searchBom(product_name, cri.getPageNum(), cri.getAmount());
+	}
+
+
+
 
 
 

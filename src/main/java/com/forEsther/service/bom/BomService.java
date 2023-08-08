@@ -4,11 +4,18 @@ import java.util.List;
 
 import com.forEsther.vo.bomregistrationvo.BomRegistrationVO;
 import com.forEsther.vo.bomvo.BomVO;
+import com.forEsther.vo.bomvo.Criteria;
 import com.forEsther.vo.itemvo.ItemVO;
 
 public interface BomService {
-	public List<BomVO> getList();
+	//public List<BomVO> getList();
+	public List<BomVO> getList(Criteria cri);
+	public List<BomRegistrationVO> getBomRegList();
+	public int getTotal();
+	
 	public List<BomVO> get(String product_name);
+	public List<BomVO> searchBom(String product_name, Criteria cri);
+	
 	public int getCount(String product_name);
 	public BomVO getDetail(String bom_code);
 	public BomVO getBom(String bom_code);
