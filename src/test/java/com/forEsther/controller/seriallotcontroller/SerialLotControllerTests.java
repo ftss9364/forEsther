@@ -49,9 +49,13 @@ public class SerialLotControllerTests {
 	
 //	// 전체 목록 테스트
 //	@Test
-//	public void testgetList() throws Exception {
-//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/serialLot/serialLotList"))
-//			.andReturn().getModelAndView().getModel());
+//	public void testListPaging() throws Exception {
+//		log.info(mockMvc.perform(
+//					MockMvcRequestBuilders.get("/serialLot/serialLotList")
+//					.param("pageNum", "2")
+//					.param("amount", "10"))
+//					.andReturn().getModelAndView().getModelMap()
+//				);
 //	}
 	
 //	// 상세보기

@@ -50,11 +50,12 @@ public class UnitPriceController {
 	public void register() {}
 	
 	
-	@PostMapping("/autocomplete")
-	public @ResponseBody Map<String, Object> autocomplete(@RequestParam Map<String, Object> paramMap) {
-		
-		List< Map<String, Object>> resultList = service.autocomplete(paramMap);
-		
-		return resultList;
-	}
+	/*
+	 * @PostMapping("/autocomplete") public @ResponseBody Map<String, Object>
+	 * autocomplete(@RequestParam Map<String, Object> paramMap) {
+	 * 
+	 * List< Map<String, Object>> resultList = service.autocomplete(paramMap);
+	 * 
+	 * return resultList; }
+	 */
 }

@@ -7,12 +7,29 @@
 		serial_lot_code, item_code, registration_date, item_name, expiration_date,
 		stock_quantity, supplier, related_invoice
 	-->
+	
+	<!-- sql문 모듈화 -->
+<!-- 	<sql id = "criteria">
+		<trim prefix="(" suffix=") AND " separator="OR">
+			<foreach item='type' collection="typeArr">
+					<choose>
+						<when test = "type == 'item_name'">
+							item_name like '%'||#{keyword}||'%'
+						</when>
+						<when test = "type == 'item_code'">
+							item_code like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+			</foreach>
+		</trim>
+	</sql> -->
+	
 	<!-- insert -->
-	<insert id="insert">
-		insert into tbl_serial_lot values (
-			#{serial_lot_code}, #{item_code}, sysdate, #{item_name},
-			#{expiration_date}, #{stock_quantity}, #{supplier}, #{related_invoice}
-		)
+	<insert id="insert" parameterType="com.forEsther.vo.seriallotvo.SerialLotVO">
+	  INSERT INTO tbl_serial_lot VALUES (
+	  #{serial_lot_code}, #{item_code}, sysdate, #{item_name},
+	  #{expiration_date}, #{stock_quantity}, #{supplier}, #{related_invoice}
+	  )
 	</insert>
 	
 	<!-- update -->
@@ -59,21 +76,75 @@
 		and serial_lot_code = #{serial_lot_code}
 	</select>
 	
-	<!-- getList -->
+	<!-- getList 검색결과 포함 -->
 	<select id="getList" resultMap="serialLotResult">
-		select 
-		tsl.serial_lot_code as serial_lot_code,
-		ti.item_code as item_code,
-		ti.item_name as item_name,
-		tsl.registration_date as registration_date,
-		tsl.expiration_date as expiration_date,
-		tsl.stock_quantity as stock_quantity,
-		tsl.supplier as supplier,
-		tsl.related_invoice as related_invoice
-		
-		from tbl_serial_lot tsl, tbl_items ti
-		where tsl.item_code = ti.item_code
+		<![CDATA[
+		 select
+			serial_lot_code, item_code, item_name, registration_date,
+			expiration_date, stock_quantity, supplier, related_invoice
+			from (
+				select /*INDEX_DESC(PK_TBL_SERIAL_LOT) */
+				rownum as rn,
+				tsl.serial_lot_code as serial_lot_code,
+				ti.item_code as item_code,
+				ti.item_name as item_name,
+				tsl.registration_date as registration_date,
+				tsl.expiration_date as expiration_date,
+				tsl.stock_quantity as stock_quantity,
+				tsl.supplier as supplier,
+				tsl.related_invoice as related_invoice
+				
+				from tbl_serial_lot tsl, tbl_items ti
+				where tsl.item_code = ti.item_code
+				and ]]>
+			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+					<trim prefix="OR">
+						<choose>
+							<when test = "type == 'N'.toString()">
+								ti.item_name like '%'||#{keyword}||'%'
+							</when>
+							<when test = "type == 'C'.toString()">
+								ti.item_code like '%'||#{keyword}||'%'
+							</when>
+						</choose>
+					</trim>
+			</foreach>
+			</trim>
+		<![CDATA[
+			rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
 	</select>
 	
+	<!-- TotalCount -->
+	<select id="getTotalCount" resultType="int">
+	  	<![CDATA[
+	  		select count(*) from tbl_serial_lot
+	  	]]>
+  	</select>
+	
+	<!-- 검색기능 자동완성 -->
+	  <select id="itemSearch" parameterType="map" resultType="com.forEsther.vo.itemvo.ItemVO">
+		select 
+			item_code,
+			item_name,
+			item_classification
+		from tbl_items
+		where
+		<![CDATA[
+		 <choose>
+        	<when test = "type == 'N'.toString()">
+            item_name like '%' || #{keyword} || '%'
+            </when>
+        	<when test = "type == 'C'.toString()">
+            item_code like '%' || #{keyword} || '%'
+            </when>
+        </choose>
+		]]>
+	</select>
+	
+
 	
 </mapper>

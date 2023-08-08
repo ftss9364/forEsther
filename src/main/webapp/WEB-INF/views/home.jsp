@@ -133,7 +133,7 @@
           <ul class="menu-inner py-1">
             <!-- 대시보드 -->
             <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+              <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
               </a>
@@ -159,9 +159,21 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/serialLot/serialLotList" class="menu-link">
-                    <div data-i18n="Container">SERIAL LOT관리</div>
+                  <a href="javascript:void(0);" class="menu-link menu-toggle">
+                	<div data-i18n="Layouts">Serial/Lot 관리</div>
                   </a>
+                  <ul class="menu-sub">
+	                <li class="menu-item">
+	                  <a href="/serialLot/serialLotList" class="menu-link">
+	                    <div data-i18n="Without menu">Serial/Lot 현황</div>
+	                  </a>
+	                </li>
+	                <li class="menu-item">
+	                  <a href="/serialLot/serialLotIrpdList" class="menu-link">
+	                    <div data-i18n="Without menu">Serial/Lot 재고수불부</div>
+	                  </a>
+	                </li>
+                  </ul>
                 </li>
                 <li class="menu-item">
                   <a href="index.html" class="menu-link">
