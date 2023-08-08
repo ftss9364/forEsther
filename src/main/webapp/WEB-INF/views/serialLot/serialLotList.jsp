@@ -11,7 +11,7 @@
 >
   <head>
     <meta charset="utf-8" />
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ page language="java" contentType="text/HTML; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -132,8 +132,8 @@
           <!-- Menu list -->
           <ul class="menu-inner py-1">
             <!-- 대시보드 -->
-            <li class="menu-item active">
-              <a href="index.html" class="menu-link">
+            <li class="menu-item">
+              <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">대시보드</div>
               </a>
@@ -141,7 +141,7 @@
             <!-- // 대시보드 -->
 
             <!-- 재고관리 -->
-            <li class="menu-item">
+            <li class="menu-item open active">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">재고관리</div>
@@ -158,10 +158,22 @@
                     <div data-i18n="Without navbar">BOM관리</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="/serialLot/serialLotList" class="menu-link">
-                    <div data-i18n="Container">SERIAL LOT관리</div>
+                <li class="menu-item open active">
+                  <a href="javascript:void(0);" class="menu-link menu-toggle">
+                	<div data-i18n="Layouts">Serial/Lot 관리</div>
                   </a>
+                  <ul class="menu-sub">
+	                <li class="menu-item active">
+	                  <a href="/serialLot/serialLotList" class="menu-link">
+	                    <div data-i18n="Without menu">Serial/Lot 현황</div>
+	                  </a>
+	                </li>
+	                <li class="menu-item">
+	                  <a href="/serialLot/serialLotIrpdList" class="menu-link">
+	                    <div data-i18n="Without menu">Serial/Lot 재고수불부</div>
+	                  </a>
+	                </li>
+                  </ul>
                 </li>
                 <li class="menu-item">
                   <a href="index.html" class="menu-link">
@@ -276,21 +288,28 @@
                           
                           <div class="table-filter">
                               <strong id="total-text" class="total-text"></strong>
-                              <form class="search-combo" action="/item/search" method="post">
+                              <form id="searchForm" class="search-combo" action="/serialLot/serialLotList" method="get">
                                  <!-- Dropbox UI-->
                                  <div class="search-combo-dropbox">
-                                    <select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                                       <option vlaue="품목명">품목명</option>
-                                       <option value="품목코드">품목코드</option>
+                                    <select name="type" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+                                       <option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+                                       <option value="N"
+									<c:out value="${pageMaker.cri.type eq 'item_name'?'selected':''}"/>>품목명</option>
+                                       <option value="C"
+									<c:out value="${pageMaker.cri.type eq 'item_code'?'selected':''}"/>>품목코드</option>
                                     </select>
                                  </div>
                                  <!-- / Dropbox UI-->
+                                 
                                  <!-- Search UI -->
                                  <div class="search-combo-input">
                                     <div class="input-group input-group-merge">
-                                       <input name="searchValue" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                                       aria-describedby="basic-addon-search31" />
-                                       <button type="submit" class="btn btn-secondary search-btn">
+                                       <input name="keyword" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                                       aria-describedby="basic-addon-search31" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+                                       <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+									   <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
+                                       <button id="searchBtn" type="submit" class="btn-secondary search-btn">
                                           <i class="bx bx-search"></i>
                                        </button> 
                                     </div>
@@ -298,6 +317,15 @@
                                  <!-- / Search UI -->
                               </form>
                            </div>
+                           
+                           <!-- 
+                           							<input type='text' name='keyword'
+								value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
+							<input type='hidden' name='pageNum'
+								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
+							<input type='hidden' name='amount'
+								value='<c:out value="${pageMaker.cri.amount}"/>' />
+                            -->
 
                           <!-- Table UI -->
                           <div class="table-responsive text-nowrap">
@@ -317,8 +345,8 @@
 								</tr>
                               </thead>
                               <tbody>
-                              	<c:forEach items="${list}" var="content">
-									<c:set var="index" value="${index+1}" />
+                              	<c:forEach items="${list}" var="content" varStatus="loop">
+									<c:set var="index" value="${(pageMaker.cri.pageNum - 1) * 10 + loop.index + 1}" />
 									<tr>
 										<td>${index}</td>
 										<td><fmt:formatDate pattern="yyyy-MM-dd" value="${content.registration_date}" /></td>
@@ -336,7 +364,6 @@
                     					<td><button type="button" class="modifyBtn btn-outline-primary" data-serial_lot_code="${content.serial_lot_code}">수정</button></td>
 									</tr>
 								</c:forEach>
-								<c:set var="count" value="${index}"/>
                               </tbody>
                             </table>
                           </div>
@@ -379,8 +406,8 @@
 								
 								<!-- 수정 모달 -->
 								<div class="modal fade" id="modify-modal" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
-								  <div class="modal-dialog modal-lg" role="document">
-								    <div class="modal-content" style="width: 800px; height: 780px;">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content" style="width: 1400px; height: 600px;">
 								      <div class="modal-header">
 								        <h5 class="modal-title" id="exampleModalLabel4">수정</h5>
 								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -402,41 +429,33 @@
                           <!-- Pagination UI -->
                           <nav aria-label="Page navigation">
                             <ul class="pagination">
-                              <li class="page-item first">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item prev">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-left"></i
-                                ></a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">1</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">2</a>
-                              </li>
-                              <li class="page-item active">
-                                <a class="page-link" href="javascript:void(0);">3</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">4</a>
-                              </li>
-                              <li class="page-item">
-                                <a class="page-link" href="javascript:void(0);">5</a>
-                              </li>
-                              <li class="page-item next">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevron-right"></i
-                                ></a>
-                              </li>
-                              <li class="page-item last">
-                                <a class="page-link" href="javascript:void(0);"
-                                  ><i class="tf-icon bx bx-chevrons-right"></i
-                                ></a>
-                              </li>
+                            <!-- prev 버튼 활성화 -->
+							<!--  boolean 타입 반환 -->
+							<c:if test="${pageMaker.cri.pageNum > 1}">
+								<li class="page-item prev">
+								<a class="page-link" href="/serialLot/serialLotList?pageNum=${pageMaker.cri.pageNum -1}">
+									<i class="tf-icon bx bx-chevron-left"></i>
+								</a>
+								</li>
+							</c:if>
+							
+							<!-- 페이지 번호 개수 -->
+							<c:forEach var="num" 
+								begin="${pageMaker.startPage}"
+								end="${pageMaker.endPage}">
+								<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} ">
+									<a class="page-link" href="/serialLot/serialLotList?pageNum=${num}">${num}</a>
+								</li>
+							</c:forEach>
+							
+							<!-- next 버튼 활성화 -->
+							<c:if test="${pageMaker.cri.pageNum + 1 <= pageMaker.endPage}">
+								<li class="page-item next">
+									<a class="page-link" href="/serialLot/serialLotList?pageNum=${pageMaker.cri.pageNum +1}">
+										<i class="tf-icon bx bx-chevron-right"></i>
+									</a>
+								</li>
+							</c:if>
                             </ul>
                           </nav>
                           <!-- / Pagination UI -->

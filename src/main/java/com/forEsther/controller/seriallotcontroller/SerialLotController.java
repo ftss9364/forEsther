@@ -3,8 +3,13 @@ package com.forEsther.controller.seriallotcontroller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.forEsther.service.seriallotservice.SerialLotService;
+import com.forEsther.vo.commonvo.Criteria;
+import com.forEsther.vo.commonvo.PageDTO;
+import com.forEsther.vo.itemvo.ItemVO;
 import com.forEsther.vo.seriallotvo.SerialLotVO;
 
 import lombok.extern.log4j.Log4j;
@@ -28,16 +36,31 @@ public class SerialLotController {
 	
 	// getList
 	@GetMapping("/serialLotList")
-	public void list(Model model) {
+	public void list(Criteria cri, Model model) {
 		log.info("getList...........");
-		model.addAttribute("list", service.getList());
+		
+		// DB의 전체 데이터 개수 가져오기 위한 변수 선언
+		int total = service.getTotal(cri);
+		
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
+	
+	/*
+	 * // searchItem
+	 * 
+	 * @GetMapping("/search") public ResponseEntity<List<ItemVO>>
+	 * searchItems(@RequestParam Map<String, Object> searchParams) { List<ItemVO>
+	 * searchResults = service.itemSearch(searchParams); return
+	 * ResponseEntity.ok(searchResults); }
+	 */
 	
 	// get
 	@GetMapping(value = {"/serialLotGet", "/serialLotModify"})
 	public void get(@RequestParam("serial_lot_code") String serial_lot_code, Model model) {
-		log.info("get...........");
+		log.info("get..........." + serial_lot_code);
 		model.addAttribute("get", service.get(serial_lot_code));
+		model.addAttribute("serial_lot_code", serial_lot_code);
 	}
 	
 	// Get register
@@ -54,7 +77,8 @@ public class SerialLotController {
 			@RequestParam("supplier") String supplier, 
 			@RequestParam("stock_quantity") String stock_quantity, 
 			@RequestParam("expiration_date") String expiration_date, 
-			@RequestParam("related_invoice") String related_invoice, 
+			@RequestParam("related_invoice") String related_invoice,
+			HttpSession session,
 	        RedirectAttributes rttr) {
 
 		log.info("start register...........");
@@ -82,17 +106,18 @@ public class SerialLotController {
 
 	        log.info("register..........." + serial_lot);
 
-	        service.register(serial_lot);
+	        service.register(serial_lot, serialLotCode);
 
 	        rttr.addFlashAttribute("result", serial_lot);
-
-	        return "redirect:/serialLot/serialLotList";
+	        session.setAttribute("success", true);
+	        
 	    } catch (Exception e) {
 	        // 날짜 형식 변환 실패 시 처리할 예외 처리
 	        e.printStackTrace();
+	        session.setAttribute("success", false);
 	        log.info(e);
-	        return "redirect:/serialLot/serialLotList"; // 또는 다른 에러 처리 방법
 	    }
+	    return "redirect:/serialLot/serialLotList";
 	}
 
 	

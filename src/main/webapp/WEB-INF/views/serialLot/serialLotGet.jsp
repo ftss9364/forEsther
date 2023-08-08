@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+	String serial_lot_code = request.getParameter("serial_lot_code");
+%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -61,7 +64,7 @@
   <body>
   <div class="col-xxl">
     <div class="card mb-4">
-      <div class="card-body">
+      <div class="card-body" style="height: 500px;">
       
       <!-- 상세보기 폼 -->
         <form id="getForm">
@@ -84,17 +87,25 @@
               value='<c:out value="${get.item_code}"/>' readonly="readonly">
             </div>
           </div>
+
         </form>
         
+         <!-- serialLotIrpdGet.jsp 파일을 include -->
+         <div>
+    	  <jsp:include page="serialLotIrpdGet.jsp">
+    	  	<jsp:param name="serial_lot_code" value="<%= serial_lot_code %>" />
+    	  </jsp:include>
+      	</div>
       </div>
     </div>
   </div>
+    
+    
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
-  <script src="../resources/assets/js/pages/serialLotRegister.js"></script>
 </body>
 </html>
 

@@ -1,0 +1,41 @@
+.table-filter {
+	margin: 26px 0 10px;
+	display: flex;
+	justify-content: space-between;
+  	align-items: end;
+	width: 100%;
+}
+
+.total-text {
+	font-size: large;
+}
+
+.search-combo {
+  display: flex;
+  gap: 10px;
+}
+
+.search-combo-dropbox {
+	width: 200px;
+}
+
+.search-combo-input {
+	width: 300px;
+}
+
+.pagination {
+	margin: 30px 0;
+	justify-content: center;
+}
+
+.itemCode-btn {
+	padding: 0; 
+	overflow: visible; 
+	border: none; 
+	border-bottom: 1px solid #0066ff;
+	border-radius: 0; 
+	box-shadow: none; 
+	background: inherit; 
+	color:blue;
+	cursor: pointer;
+}

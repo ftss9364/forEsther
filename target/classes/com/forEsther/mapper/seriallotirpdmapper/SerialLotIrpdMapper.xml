@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forEsther.mapper.seriallotirpdmapper.SerialLotIrpdMapper">
+	<!-- sql문 
+		serial_lot_irpd_code, serial_lot_code, item_name, irpd_category, variation_quantity,
+		stock_quantity, related_invoice, customer_name
+	-->
+	<!-- insert -->
+	<insert id="insert" parameterType="com.forEsther.vo.seriallotirpdvo.SerialLotIrpdVO">
+	  <!-- 시퀀스를 활용하여 serial_lot_irpd_code 자동 생성 -->
+	  <selectKey keyProperty="serial_lot_irpd_code" resultType="java.lang.String" order="BEFORE">
+	    SELECT 'IRPD-' || tbl_serial_lot_irpd_seq.NEXTVAL FROM DUAL
+	  </selectKey>
+	
+	  INSERT INTO tbl_serial_lot_irpd (serial_lot_irpd_code, serial_lot_code, item_name,
+	    irpd_category, variation_quantity, stock_quantity, related_invoice, customer_name)
+	  VALUES (
+	    #{serial_lot_irpd_code}, #{serial_lot_code}, #{item_name},
+	    '입고', #{variation_quantity}, #{stock_quantity}, #{related_invoice}, #{customer_name}
+	  )
+	</insert>
+	
+	<!-- resultMap -->
+	<resultMap type="com.forEsther.vo.seriallotirpdvo.SerialLotIrpdVO" id="serialLotIrpdResult">
+        <id property="serial_lot_irpd_code" column="serial_lot_irpd_code"/>
+        <result column="serial_lot_code" property="serial_lot_code"/>
+        <result column="item_name" property="item_name"/>
+        <result column="irpd_category" property="irpd_category"/>
+        <result column="variation_quantity" property="variation_quantity"/>
+        <result column="stock_quantity" property="stock_quantity"/>
+        <result column="related_invoice" property="related_invoice"/>
+        <result column="customer_name" property="customer_name"/>
+        <!-- 시리얼로트 재고수불부와 시리얼로트는 연관관계(1대다) -->
+        <collection property="serialLotVO" column="serial_lot_code" javaType="com.forEsther.vo.seriallotvo.SerialLotVO">
+        <id property="serial_lot_code" column="serial_lot_code"/>
+        <result property="item_name" column="item_name"/>
+        <result column="supplier" property="supplier"/>
+        <result column="stock_quantity" property="stock_quantity"/>
+        <result property="registration_date" column="registration_date" />
+        </collection>
+    </resultMap>
+	
+	
+	<!-- read -->
+	<select id="read" parameterType="String" resultMap="serialLotIrpdResult">
+		
+		select 
+		tsli.serial_lot_irpd_code as serial_lot_irpd_code,
+		tsl.registration_date as registration_date,
+		tsl.serial_lot_code as serial_lot_code,
+		tsl.item_name as item_name,
+		tsli.irpd_category as irpd_category,
+		tsli.variation_quantity as variation_quantity,
+		tsli.stock_quantity as stock_quantity,
+		tsl.supplier as supplier,
+		tsl.related_invoice as related_invoice
+		
+		from tbl_serial_lot_irpd tsli, tbl_serial_lot tsl
+		where tsli.serial_lot_code = tsl.serial_lot_code
+		and tsli.serial_lot_code = #{serial_lot_code}
+		
+	</select>
+	
+	<!-- getList -->
+	<select id="getList" parameterType="int" resultMap="serialLotIrpdResult">
+		<![CDATA[
+		 select
+			serial_lot_irpd_code, registration_date, serial_lot_code, item_name, irpd_category,
+			variation_quantity, stock_quantity, supplier, related_invoice
+			from (
+				select /*INDEX_DESC(PK_TBL_SERIAL_LOT) */
+				rownum as rn,
+				tsli.serial_lot_irpd_code as serial_lot_irpd_code,
+				tsl.registration_date as registration_date,
+				tsl.serial_lot_code as serial_lot_code,
+				tsl.item_name as item_name,
+				tsli.irpd_category as irpd_category,
+				tsli.variation_quantity as variation_quantity,
+				tsli.stock_quantity as stock_quantity,
+				tsl.supplier as supplier,
+				tsl.related_invoice as related_invoice
+				
+				from tbl_serial_lot_irpd tsli, tbl_serial_lot tsl
+				where tsli.serial_lot_code = tsl.serial_lot_code
+				and rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum}-1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- TotalCount -->
+	<select id="getTotalCount" resultType="int">
+	  	<![CDATA[
+	  		select count(*) from tbl_serial_lot_irpd
+	  	]]>
+  	</select>
+	
+</mapper>
