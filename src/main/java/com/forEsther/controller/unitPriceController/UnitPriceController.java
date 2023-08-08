@@ -153,7 +153,7 @@ public class UnitPriceController {
 		
 
 	@PostMapping("/register")
-<<<<<<< HEAD
+
 	public void register() {}
 	
 	
@@ -165,7 +165,7 @@ public class UnitPriceController {
 	 * 
 	 * return resultList; }
 	 */
-=======
+
 	public String register(MultipartFile uploadFile, UnitPriceVO unitPrice, RedirectAttributes rttr) {
 		if (!uploadFile.isEmpty()) {
 
@@ -219,5 +219,4 @@ public class UnitPriceController {
 
 		return path;
 	}
->>>>>>> 43597cd72afa84f7a2282895f59b46b3222ab1bf
 }
