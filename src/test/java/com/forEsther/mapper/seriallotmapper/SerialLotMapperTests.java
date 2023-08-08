@@ -58,11 +58,11 @@ public class SerialLotMapperTests {
 //		log.info("finish....................");
 //	}
 	
-	// read Test
-	@Test
-	public void testRead() {
-		log.info(mapper.read("RM-001-20240801"));
-	}
+//	// read Test
+//	@Test
+//	public void testRead() {
+//		log.info(mapper.read("RM-001-20240801"));
+//	}
 	
 //	// update Test
 //	@Test
@@ -78,6 +78,12 @@ public class SerialLotMapperTests {
 //	public void testgetList() {
 //		log.info(mapper.getList());
 //		
+//	}
+	
+//	// itemSearch Test
+//	@Test
+//	public void testItemSearch() {
+//		log.info(mapper.itemSearch("고기"));
 //	}
 
 }

@@ -1,8 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	String serial_lot_code = request.getParameter("serial_lot_code");
-%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -58,54 +55,83 @@
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../resources/assets/js/config.js"></script>
+    <!-- <script src="../resources/assets/js/config.js"></script> -->
   </head>
 
   <body>
+	
   <div class="col-xxl">
     <div class="card mb-4">
-      <div class="card-body" style="height: 500px;">
-      
-      <!-- 상세보기 폼 -->
-        <form id="getForm">
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label class="col-form-label">시리얼로트 코드</label>
-              <input type="text" class="form-control" id="serial_lot_code" name="serial_lot_code"
-              value='<c:out value="${get.serial_lot_code}"/>' readonly="readonly">
-            </div>
-            <div class="col-md-6">
-              <label class="col-form-label">품목명</label>
-              <input type="text" class="form-control" id="item_name" name="item_name"
-              value='<c:out value="${get.item_name}"/>' readonly="readonly">
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label class="col-form-label">품목코드</label>
-              <input type="text" class="form-control" id="item_code" name="item_code"
-              value='<c:out value="${get.item_code}"/>' readonly="readonly">
-            </div>
-          </div>
-
-        </form>
+      <div class="card-body">
+      <h6>재고수불부 내역</h6>
+                       <!-- Table UI -->
+                          <div class="table-responsive text-nowrap" style="width: 100%; heigth: 100%">
+                            <table class="detailTable table table-bordered">
+                              <thead>
+                 			   <tr>
+									<th>순번</th>
+									<th>등록일자</th>
+									<th>재고수불부 코드</th>
+									<th>Serial/Lot No</th>
+									<th>품목명</th>
+									<th>분류</th>
+									<th>변동재고량</th>
+									<th>현재재고량</th>
+									<th>구매처</th>
+									<th>연결전표</th>
+									
+								</tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!--/ Table UI -->
         
-         <!-- serialLotIrpdGet.jsp 파일을 include -->
-         <div>
-    	  <jsp:include page="serialLotIrpdGet.jsp">
-    	  	<jsp:param name="serial_lot_code" value="<%= serial_lot_code %>" />
-    	  </jsp:include>
-      	</div>
       </div>
     </div>
   </div>
-    
-    
   <!-- Place this tag in your head or just before your close body tag. -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="../resources/assets/js/pages/serialLotIrpd.js"></script>
   <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
+      <script type="text/javascript">
+	
+    		serialLotIrpdService.get(`${serial_lot_code}`, function(list) {
+    			var str = "";
+    			var index = 1;
+    			for (var i=0, len=list.length || 0; i<len; i++) {
+    				
+    				var registration_date = list[i].registration_date;
+    				var serial_lot_irpd_code = list[i].serial_lot_irpd_code;
+    				var serial_lot_code = list[i].serial_lot_code;
+    				var item_name = list[i].item_name;
+    				var irpd_category = list[i].irpd_category;
+    				var variation_quantity = list[i].variation_quantity;
+    				var stock_quantity = list[i].stock_quantity;
+    				var supplier = list[i].supplier;
+    				var related_invoice = list[i].related_invoice;
+
+					str += "<tr><td>" + index + "</td>"
+							+ "<td>" + registration_date +"</td>"
+							+ "<td>" + serial_lot_irpd_code +"</td>"
+							+ "<td>" + serial_lot_code +"</td>"
+							+ "<td>" + item_name +"</td>"
+							+ "<td>" + irpd_category +"</td>"
+							+ "<td>" + variation_quantity +"</td>"
+							+ "<td>" + stock_quantity +"</td>"
+							+ "<td>" + supplier +"</td>"
+							+ "<td>" + related_invoice +"</td></tr>";
+					index = index + 1;
+					
+    			};
+    			$(".detailTable tbody").append(str);
+    			
+    		})// end getList
+    		
+    </script>
 </body>
 </html>
 

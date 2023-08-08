@@ -153,6 +153,19 @@ public class UnitPriceController {
 		
 
 	@PostMapping("/register")
+<<<<<<< HEAD
+	public void register() {}
+	
+	
+	/*
+	 * @PostMapping("/autocomplete") public @ResponseBody Map<String, Object>
+	 * autocomplete(@RequestParam Map<String, Object> paramMap) {
+	 * 
+	 * List< Map<String, Object>> resultList = service.autocomplete(paramMap);
+	 * 
+	 * return resultList; }
+	 */
+=======
 	public String register(MultipartFile uploadFile, UnitPriceVO unitPrice, RedirectAttributes rttr) {
 		if (!uploadFile.isEmpty()) {
 
@@ -206,4 +219,5 @@ public class UnitPriceController {
 
 		return path;
 	}
+>>>>>>> 43597cd72afa84f7a2282895f59b46b3222ab1bf
 }

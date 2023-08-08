@@ -11,7 +11,7 @@
 >
   <head>
     <meta charset="utf-8" />
-    <%@ page language="java" contentType="text/HTML; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -163,12 +163,12 @@
                 	<div data-i18n="Layouts">Serial/Lot 관리</div>
                   </a>
                   <ul class="menu-sub">
-	                <li class="menu-item active">
+	                <li class="menu-item">
 	                  <a href="/serialLot/serialLotList" class="menu-link">
 	                    <div data-i18n="Without menu">Serial/Lot 현황</div>
 	                  </a>
 	                </li>
-	                <li class="menu-item">
+	                <li class="menu-item active">
 	                  <a href="/serialLot/serialLotIrpdList" class="menu-link">
 	                    <div data-i18n="Without menu">Serial/Lot 재고수불부</div>
 	                  </a>
@@ -277,39 +277,27 @@
                         <div class="card-body">
                           <!-- page header -->
                           <header class="page-header">
-                            <h2 class="page-title text-primary">시리얼로트 현황</h1>
-                            <div>
-                              <button id="regBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register-modal">
-                                신규등록
-                              </button>
-                            </div>
+                            <h2 class="page-title text-primary">시리얼로트 재고수불부</h1>
                           </header>
                           <hr/>
                           
                           <div class="table-filter">
                               <strong id="total-text" class="total-text"></strong>
-                              <form id="searchForm" class="search-combo" action="/serialLot/serialLotList" method="get">
+                              <form class="search-combo" action="/item/search" method="post">
                                  <!-- Dropbox UI-->
                                  <div class="search-combo-dropbox">
-                                    <select name="type" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                                       <option value=""
-									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-                                       <option value="N"
-									<c:out value="${pageMaker.cri.type eq 'item_name'?'selected':''}"/>>품목명</option>
-                                       <option value="C"
-									<c:out value="${pageMaker.cri.type eq 'item_code'?'selected':''}"/>>품목코드</option>
+                                    <select name="searchType" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+                                       <option vlaue="품목명">품목명</option>
+                                       <option value="품목코드">품목코드</option>
                                     </select>
                                  </div>
                                  <!-- / Dropbox UI-->
-                                 
                                  <!-- Search UI -->
                                  <div class="search-combo-input">
                                     <div class="input-group input-group-merge">
-                                       <input name="keyword" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
-                                       aria-describedby="basic-addon-search31" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
-                                       <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
-									   <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
-                                       <button id="searchBtn" type="submit" class="btn-secondary search-btn">
+                                       <input name="searchValue" type="text" class="form-control" placeholder="Search..." aria-label="Search..."
+                                       aria-describedby="basic-addon-search31" />
+                                       <button type="submit" class="btn btn-secondary search-btn">
                                           <i class="bx bx-search"></i>
                                        </button> 
                                     </div>
@@ -317,110 +305,47 @@
                                  <!-- / Search UI -->
                               </form>
                            </div>
-                           
-                           <!-- 
-                           							<input type='text' name='keyword'
-								value='<c:out value="${pageMaker.cri.keyword}"/>' /> 
-							<input type='hidden' name='pageNum'
-								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> 
-							<input type='hidden' name='amount'
-								value='<c:out value="${pageMaker.cri.amount}"/>' />
-                            -->
 
                           <!-- Table UI -->
                           <div class="table-responsive text-nowrap">
-                            <table class="table table-bordered">
+                            <table class="serialLotIrpdTable table table-bordered">
                               <thead>
                  			   <tr>
 									<th>순번</th>
 									<th>등록일자</th>
+									<th>재고수불부 코드</th>
 									<th>Serial/Lot No</th>
 									<th>품목명</th>
-									<th>품목코드</th>
-									<th>유통기한</th>
+									<th>분류</th>
+									<th>변동재고량</th>
 									<th>현재재고량</th>
-									<th>구매처명</th>
+									<th>구매처</th>
 									<th>연결전표</th>
-									<th>수정</th>
 								</tr>
                               </thead>
                               <tbody>
-                              	<c:forEach items="${list}" var="content" varStatus="loop">
-									<c:set var="index" value="${(pageMaker.cri.pageNum - 1) * 10 + loop.index + 1}" />
-									<tr>
-										<td>${index}</td>
-										<td><fmt:formatDate pattern="yyyy-MM-dd" value="${content.registration_date}" /></td>
-										<td>
-								            <a href="" class="open-detail-modal" data-serial_lot_code="${content.serial_lot_code}">
-								                <c:out value="${content.serial_lot_code}" />
-								            </a>
-											</td>
-										<td><c:out value="${content.item_name}" /></td>
-										<td><c:out value="${content.item_code}" /></td>
-										<td><fmt:formatDate pattern="yyMMdd" value="${content.expiration_date}" /></td>
-										<td><c:out value="${content.stock_quantity}" /></td>
-										<td><c:out value="${content.supplier}" /></td>
-										<td><c:out value="${content.related_invoice}" /></td>
-                    					<td><button type="button" class="modifyBtn btn-outline-primary" data-serial_lot_code="${content.serial_lot_code}">수정</button></td>
-									</tr>
-								</c:forEach>
                               </tbody>
                             </table>
                           </div>
                           <!--/ Table UI -->
                           
 						<!-- 모달창 -->
-								<!-- 신규등록 모달 -->
-								<div class="modal fade" id="register-modal" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
-								  <div class="modal-dialog modal-lg" role="document">
-								    <div class="modal-content" style="width: 800px; height: 700px;">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel4">시리얼로트 등록</h5>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								      <div class="modal-body">
-								        <!-- register jsp 와 연결 -->
-								        <iframe id="go-register" src="/serialLot/serialLotRegister" style="width: 100%; height: 100%; border: none;"></iframe>
-								      </div>
-								    </div>
-								  </div>
-								</div>
-								<!-- /신규등록 모달 -->
-								
-								<!-- 상세정보 모달 -->
-								<div class="modal fade" id="detail-modal" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
-								  <div class="modal-dialog modal-lg" role="document">
-								    <div class="modal-content" style="width: 800px; height: 480px;">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel4">상세정보</h5>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								      <div class="modal-body">
+							<!-- 상세정보 모달 -->
+							<div class="modal fade" id="serialLotIrpdDetail-modal" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
+							  <div class="modal-dialog modal-xl" role="document">
+							    <div class="modal-content" style="width: 100%; height: 400px;">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel4">상세정보</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
 								        <!-- get jsp 와 연결 -->
-								        <iframe id="go-get" style="width: 100%; height: 100%; border: none;"></iframe>
-								      </div>
-								    </div>
-								  </div>
-								</div>
-								<!-- /상세정보 모달 -->
-								
-								<!-- 수정 모달 -->
-								<div class="modal fade" id="modify-modal" tabindex="-1" style="display: none;" aria-hidden="true" role="dialog">
-								  <div class="modal-dialog modal-dialog-centered" role="document">
-								    <div class="modal-content" style="width: 1400px; height: 600px;">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel4">수정</h5>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								      <div class="modal-body">
-								        <!-- modify jsp 와 연결 -->
-								        <iframe id="go-modify" style="width: 100%; height: 100%; border: none;"></iframe>
-								      </div>
-								    </div>
-								  </div>
-								</div>
-								<!-- /수정 모달 -->
-								
+							        <iframe id="go-get" style="width: 100%; height: 100%; border: none;"></iframe>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							<!-- /상세정보 모달 -->
 						<!-- /모달창 -->
 						
                           <br/>
@@ -433,7 +358,7 @@
 							<!--  boolean 타입 반환 -->
 							<c:if test="${pageMaker.cri.pageNum > 1}">
 								<li class="page-item prev">
-								<a class="page-link" href="/serialLot/serialLotList?pageNum=${pageMaker.cri.pageNum -1}">
+								<a class="page-link" href="/serialLot/serialLotIrpdList?pageNum=${pageMaker.cri.pageNum -1}">
 									<i class="tf-icon bx bx-chevron-left"></i>
 								</a>
 								</li>
@@ -444,14 +369,14 @@
 								begin="${pageMaker.startPage}"
 								end="${pageMaker.endPage}">
 								<li class="page-item ${pageMaker.cri.pageNum == num ? "active":""} ">
-									<a class="page-link" href="/serialLot/serialLotList?pageNum=${num}">${num}</a>
+									<a class="page-link" href="/serialLot/serialLotIrpdList?pageNum=${num}">${num}</a>
 								</li>
 							</c:forEach>
 							
 							<!-- next 버튼 활성화 -->
 							<c:if test="${pageMaker.cri.pageNum + 1 <= pageMaker.endPage}">
 								<li class="page-item next">
-									<a class="page-link" href="/serialLot/serialLotList?pageNum=${pageMaker.cri.pageNum +1}">
+									<a class="page-link" href="/serialLot/serialLotIrpdList?pageNum=${pageMaker.cri.pageNum +1}">
 										<i class="tf-icon bx bx-chevron-right"></i>
 									</a>
 								</li>
@@ -518,6 +443,46 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
-    <script src="../resources/assets/js/pages/serialLotList.js"></script>
+    <script src="../resources/assets/js/pages/serialLotIrpd.js"></script>
+    <script type="text/javascript">
+    	$(function() {
+    		serialLotIrpdService.getList(function(list) {
+    			var str = "";
+    			var index = 1;
+    			for (var i=0, len=list.length || 0; i<len; i++) {
+    				
+    				var registration_date = list[i].registration_date;
+    				var serial_lot_irpd_code = list[i].serial_lot_irpd_code;
+    				var serial_lot_code = list[i].serial_lot_code;
+    				var item_name = list[i].item_name;
+    				var irpd_category = list[i].irpd_category;
+    				var variation_quantity = list[i].variation_quantity;
+    				var stock_quantity = list[i].stock_quantity;
+    				var supplier = list[i].supplier;
+    				var related_invoice = list[i].related_invoice;
+
+					str += "<tr><td>" + index + "</td>"
+							+ "<td>" + registration_date +"</td>"
+							+ "<td>" + serial_lot_irpd_code +"</td>"
+							+ "<td> <a href=''"
+								+ " class=" + '"open-detail-modal"'
+								+ 'data-serial_lot_code="' + serial_lot_code + '">'
+								+ serial_lot_code +"</td>"
+							+ "<td>" + item_name +"</td>"
+							+ "<td>" + irpd_category +"</td>"
+							+ "<td>" + variation_quantity +"</td>"
+							+ "<td>" + stock_quantity +"</td>"
+							+ "<td>" + supplier +"</td>"
+							+ "<td>" + related_invoice +"</td></tr>";
+					index = index + 1;
+					
+    			};
+    			$(".serialLotIrpdTable tbody").append(str);
+    			
+    		})// end getList
+    		
+    	}) // end onload
+    	
+    </script>
   </body>
 </html>
