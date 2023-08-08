@@ -191,7 +191,6 @@
          <version>${org.springframework-version}</version>
       </dependency>
 
-<<<<<<< HEAD
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-tx</artifactId>
@@ -265,7 +264,6 @@
       </plugins>
    </build>
 </project>
-=======
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
@@ -333,4 +331,3 @@
 		</plugins>
 	</build>
 </project>
->>>>>>> 43597cd72afa84f7a2282895f59b46b3222ab1bf

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.forEsther.mapper.ItemMapper">
+
+	<resultMap type="com.forEsther.vo.jsonitemvo.JsonItemVO"
+		id="JsonItemVOMap">
+		<result column="item_code" property="item_code" />
+	</resultMap>
+
+	<resultMap type="com.forEsther.vo.suppliervo.SupplierVO"
+		id="SupplierVO">
+		<result column="supplier_code" property="supplier_code" />
+		<result column="supplier_name" property="supplier_name" />
+		<result column="contact_person" property="contact_person" />
+		<result column="contact_number" property="contact_number" />
+		<result column="address" property="address" />
+	</resultMap>
+
+	<resultMap
+		type="com.forEsther.vo.itemsuppliervo.ItemSupplierVO"
+		id="ItemSupplierVO">
+		<result column="item_supplier_code"
+			property="item_supplier_code" />
+		<result column="supplier_code" property="supplier_code" />
+		<result column="item_code" property="item_code" />
+		<collection property="supplier_vo" resultMap="SupplierVO" />
+	</resultMap>
+
+	<resultMap type="com.forEsther.vo.itemvo.ItemVO" id="ItemVO">
+		<result column="item_code" property="item_code" />
+		<result column="item_name" property="item_name" />
+		<result column="item_specification"
+			property="item_specification" />
+		<result column="safety_stock" property="safety_stock" />
+		<result column="serial_lot_status" property="serial_lot_status" />
+		<result column="procurement" property="procurement" />
+		<result column="item_classification"
+			property="item_classification" />
+		<collection property="itemsupplier_vo"
+			resultMap="ItemSupplierVO" />
+	</resultMap>
+
+	<select id="getItemList" resultMap="ItemVO">
+		SELECT 
+			i.item_code,
+			i.item_classification,
+			i.item_name,
+			i.item_specification,
+			i.safety_stock,
+			su.supplier_name
+		FROM tbl_items i
+		LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
+		LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
+	</select>
+	
+	<select id="getItemDetail" resultMap="ItemVO">
+  	SELECT 
+		    i.item_code,
+		    i.item_classification,
+		    i.item_name,
+		    i.item_specification,
+		    i.safety_stock,
+   		    i.procurement,
+		    su.supplier_code,
+		    su.supplier_name,
+   		    su.contact_person
+		FROM tbl_items i
+		LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
+		LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
+		WHERE i.item_code = #{value}
+	</select>
+
+	<select id="searchItem" resultMap="ItemVO">
+	    SELECT 
+	        i.item_code,
+	        i.item_classification,
+	        i.item_name,
+	        i.item_specification,
+	        i.safety_stock,
+	        su.supplier_name
+	    FROM tbl_items i
+	    LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
+	    LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
+	    WHERE
+        <choose>
+            <when test="searchType eq '품목명'.toString()">
+                i.item_name LIKE '%' || #{searchValue} || '%'
+            </when> 
+            <when test="searchType eq '구매처명'.toString()">
+                su.supplier_name LIKE '%' || #{searchValue} || '%'
+            </when>
+            <otherwise>
+            	 i.item_name LIKE '%' || #{searchValue} || '%'
+            </otherwise>
+        </choose>
+	</select>
+	
+	<insert id="registerItem" parameterType="com.forEsther.vo.jsonitemvo.JsonItemVO">
+		<selectKey keyProperty="item_code"
+			resultType="java.lang.String" order="BEFORE">
+			SELECT CASE
+			#{item_classification} WHEN '원재료' THEN CONCAT('RM-',
+			LPAD(COALESCE(MAX(SUBSTR(item_code,
+			4))+ 1, 1), 3, '0')) WHEN '제품'
+			THEN CONCAT('P-',
+			LPAD(COALESCE(MAX(SUBSTR(item_code,
+			3)) + 1, 1), 3,
+			'0')) WHEN '상품' THEN CONCAT('M-',
+			LPAD(COALESCE(MAX(SUBSTR(item_code,
+			3)) + 1, 1), 3, '0')) END AS item_code FROM tbl_items WHERE
+			item_classification
+			= #{item_classification}
+		</selectKey>
+		INSERT INTO tbl_items (item_code, item_name, item_specification,
+			safety_stock, serial_lot_status, procurement, item_classification)
+		VALUES (#{item_code}, #{item_name}, #{item_specification}, #{safety_stock}, 1, #{procurement}, #{item_classification})
+	</insert>
+	
+	<insert id="registerItemSupplier" parameterType="com.forEsther.vo.jsonitemvo.JsonItemVO" useGeneratedKeys="true" keyProperty="item_supplier_code">
+       <selectKey keyProperty="item_supplier_code" resultType="String" order="BEFORE">
+           SELECT 'IS-' || TO_CHAR(CAST(SUBSTR(MAX(item_supplier_code), 4) AS NUMBER) + 1) AS item_supplier_code FROM tbl_item_supplier
+       </selectKey>
+	    INSERT INTO tbl_item_supplier (item_supplier_code, item_code, supplier_code)
+	        VALUES (#{item_supplier_code}, #{item_code}, #{supplier_code})
+    </insert>
+	
+	
+	<delete id="removeItemSupplier" parameterType="string">
+	    DELETE FROM tbl_item_supplier
+	    WHERE item_code IN (SELECT item_code FROM tbl_items WHERE item_code = #{value})
+	</delete>
+	
+	<delete id="removeItem" parameterType="string">
+	    DELETE FROM tbl_items WHERE item_code = #{value}
+	</delete>
+
+
+</mapper>

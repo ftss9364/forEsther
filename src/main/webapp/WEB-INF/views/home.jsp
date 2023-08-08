@@ -815,7 +815,7 @@
                             </div>
                           </div>
                           <!-- / Vertical Scrollbar -->
-
+                          
                           <!-- Dropbox UI-->
                           <div class="test-ui-container">
                             <label for="exampleFormControlSelect1" class="form-label">Example select</label>
@@ -992,10 +992,9 @@
             <script src="../resources/assets/js/dashboards-analytics.js"></script>
             <script src="../resources/assets/js/extended-ui-perfect-scrollbar.js"></script>
             
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <!-- Place this tag in your head or just before your close body tag. -->
+            <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <!-- ### 커스텀 JavaScript 파일 삽입 위치 -->
-    <script src="../resources/assets/js/pages/index.js"></script>
   </body>
 </html>

@@ -1,0 +1,29 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.form-radiobox-group {
+  display: flex;
+  gap: 20px;
+}
+
+
+.warning-text {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  font-size: x-small;
+  color: rgb(255, 82, 82);
+}
+
+.bx-error-circle {
+  margin-right: 4px;
+}
+
+
+.visible-hidden {
+  display: none;
+}
