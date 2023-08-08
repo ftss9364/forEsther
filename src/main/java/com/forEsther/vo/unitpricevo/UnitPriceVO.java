@@ -1,5 +1,7 @@
 package com.forEsther.vo.unitpricevo;
 
+import com.forEsther.vo.seriallotvo.SerialLotVO;
+
 import lombok.Data;
 
 @Data
@@ -10,4 +12,6 @@ public class UnitPriceVO { //댄가
     private int standard_cost; //표준원가
     private int purchase_price; //구매단가
     private int selling_price; //판매단가
+    
+    private SerialLotVO serialLotVO;
 }
