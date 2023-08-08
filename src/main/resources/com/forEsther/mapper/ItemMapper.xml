@@ -127,8 +127,13 @@
     </insert>
 	
 	
-	<delete id="removeItem">
-		DELETE FROM tbl_items WHERE item_code = #{value}
+	<delete id="removeItemSupplier" parameterType="string">
+	    DELETE FROM tbl_item_supplier
+	    WHERE item_code IN (SELECT item_code FROM tbl_items WHERE item_code = #{value})
+	</delete>
+	
+	<delete id="removeItem" parameterType="string">
+	    DELETE FROM tbl_items WHERE item_code = #{value}
 	</delete>
 
 

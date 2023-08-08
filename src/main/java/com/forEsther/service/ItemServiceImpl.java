@@ -58,7 +58,17 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public int removeItem(String itemCode) {
 		log.info("[post/Service] removeItem...");
-		return mapper.removeItem(itemCode);
+		try {
+			mapper.removeItemSupplier(itemCode);
+			mapper.removeItem(itemCode);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		return 1;
+		
+		
 	}
 
 }

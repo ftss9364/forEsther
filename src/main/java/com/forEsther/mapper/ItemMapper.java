@@ -25,5 +25,6 @@ public interface ItemMapper {
 	
 	// 품목 삭제
 	public int removeItem(String itemCode);
+	public int removeItemSupplier(String itemCode);
 	
 }

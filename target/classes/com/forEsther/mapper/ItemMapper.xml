@@ -43,21 +43,20 @@
 	</resultMap>
 
 	<select id="getItemList" resultMap="ItemVO">
-  		SELECT 
-		    i.item_code,
-		    i.item_classification,
-		    i.item_name,
-		    i.item_specification,
-		    i.safety_stock,
-		    su.supplier_name
+		SELECT 
+			i.item_code,
+			i.item_classification,
+			i.item_name,
+			i.item_specification,
+			i.safety_stock,
+			su.supplier_name
 		FROM tbl_items i
 		LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
 		LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
 	</select>
 	
 	<select id="getItemDetail" resultMap="ItemVO">
-  		<![CDATA[
-  		SELECT 
+  	SELECT 
 		    i.item_code,
 		    i.item_classification,
 		    i.item_name,
@@ -71,7 +70,6 @@
 		LEFT JOIN tbl_item_supplier isu ON i.item_code = isu.item_code
 		LEFT JOIN tbl_supplier su ON isu.supplier_code = su.supplier_code
 		WHERE i.item_code = #{value}
-  		]]>
 	</select>
 
 	<select id="searchItem" resultMap="ItemVO">
@@ -129,8 +127,13 @@
     </insert>
 	
 	
-	<delete id="removeItem">
-		DELETE FROM tbl_items WHERE item_code = #{value}
+	<delete id="removeItemSupplier" parameterType="string">
+	    DELETE FROM tbl_item_supplier
+	    WHERE item_code IN (SELECT item_code FROM tbl_items WHERE item_code = #{value})
+	</delete>
+	
+	<delete id="removeItem" parameterType="string">
+	    DELETE FROM tbl_items WHERE item_code = #{value}
 	</delete>
 
 
