@@ -73,18 +73,21 @@ public class UnitPriceMapperTests {
 	 */
 	
 	
-	private Map<String, Object>paramMap = new HashMap<>();
+//	private Map<String, Object>paramMap = new HashMap<>();
+//	
+//	@Test
+//	public void autocompleteTest() {
+//
+//		
+//		paramMap.put("value", "RM-002-20231231");
+//		mapper.autocomplete(paramMap).forEach(word -> log.info(word));
+//	}
+//	
 	
 	@Test
-	public void autocompleteTest() {
-
-		
-		paramMap.put("value", "RM-002-20231231");
-		mapper.autocomplete(paramMap).forEach(word -> log.info(word));
+	public void chartTest() {
+		mapper.getChart("RM-010").forEach(item -> log.info(item));
 	}
-	
-	
-	
 	
 	
 	

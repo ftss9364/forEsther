@@ -47,16 +47,50 @@
 		#{selling_price}
 		)
 	</insert>
-
+	<!-- 파일 등록 -->
+	<insert id="insertFile">
+		<selectKey keyProperty="quotation_file_code" order="BEFORE"
+			resultType="String">
+			SELECT 'QF-' || lpad(nvl(max(substr(quotation_file_code,
+			-2,
+			2)) + 1, 1), 3, '0')
+			FROM tbl_quotation_file
+		</selectKey>
+		INSERT INTO tbl_quotation_file(
+		QUOTATION_FILE_CODE,
+		SERIAL_LOT_CODE,
+		FILE_NAME,
+		FILE_PATH,
+		FILE_SIZE,
+		FILE_FORMAT,
+		UPLOAD_DATE
+		) VALUES(
+		#{quotation_file_code},
+		#{serial_lot_code},
+		#{file_name},
+		#{file_path},
+		#{file_size},
+		#{file_format},
+		SYSDATE
+		)
+	</insert>
 	<!-- 단가 조회 -->
 	<select id="read"
 		resultType="com.forEsther.vo.unitpricevo.UnitPriceVO">
 		SELECT * FROM tbl_unit_price WHERE unit_price_code =
 		#{unit_price_code}
 	</select>
+	
+	<select id="getThumbnail" resultType="String">
+		SELECT file_name
+		FROM tbl_quotation_file
+		WHERE serial_lot_code = (
+			SELECT serial_lot_code
+            FROM tbl_unit_price WHERE unit_price_code = #{unit_price_code}
+            )
+	</select>
 
 	<!-- 단가 리스트 위한 Map -->
-
 	<resultMap id="unitpriceMap"
 		type="com.forEsther.vo.unitpricevo.UnitPriceVO">
 		<id property="unit_price_code" column="unit_price_code" />
@@ -99,7 +133,18 @@
   		]]>
 	</select>
 
-
+	<!-- 차트 데이터 조회-->
+	<select id="getChart" resultType="map">
+		SELECT EXTRACT(MONTH FROM REGISTRATION_DATE) AS month,
+		       AVG(purchase_price) AS mon_avg
+		FROM tbl_serial_lot s, tbl_unit_price u
+		WHERE s.serial_lot_code = u.serial_lot_code
+		    AND s.item_code = #{item_code}
+		    AND EXTRACT(MONTH FROM REGISTRATION_DATE) BETWEEN EXTRACT(MONTH FROM SYSDATE) - 6 AND EXTRACT(MONTH FROM SYSDATE)
+		    AND EXTRACT(YEAR FROM REGISTRATION_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		GROUP BY EXTRACT(MONTH FROM REGISTRATION_DATE)
+		ORDER BY month
+	</select>
 
 	<!-- 조회 건수 조회 -->
 
@@ -122,17 +167,18 @@
 
 	<!-- 자동 완성 -->
 	<select id="autocomplete" parameterType="map" resultType="map">
-		SELECT sl.SERIAL_LOT_CODE, sl.ITEM_NAME,
+		SELECT
+		sl.SERIAL_LOT_CODE, sl.ITEM_NAME,
 		CASE
-			WHEN up.UNIT_PRICE_CODE IS NULL THEN '미등록'
-			ELSE '등록완료'
+		WHEN up.UNIT_PRICE_CODE IS NULL THEN '미등록'
+		ELSE '등록완료'
 		END AS STATUS
 		FROM tbl_serial_lot sl
 		LEFT JOIN
-			tbl_unit_price up ON sl.SERIAL_LOT_CODE = up.SERIAL_LOT_CODE
+		tbl_unit_price up ON sl.SERIAL_LOT_CODE = up.SERIAL_LOT_CODE
 		WHERE
-			sl.SERIAL_LOT_CODE LIKE  '%'|| #{value} || '%'
-		
+		sl.SERIAL_LOT_CODE LIKE '%'|| #{value} || '%'
+		ORDER BY sl.ITEM_NAME
 	</select>
 </mapper>
 
