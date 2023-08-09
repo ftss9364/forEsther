@@ -1,4 +1,4 @@
-package com.forEsther.controller;
+package com.forEsther.controller.item;
 
 import java.util.List;
 import java.util.Map;
