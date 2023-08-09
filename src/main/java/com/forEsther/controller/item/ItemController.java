@@ -1,4 +1,4 @@
-package com.forEsther.controller;
+package com.forEsther.controller.item;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class ItemController {
 	public String getItemList(Model model) {
 		log.info("[GET/Controller] 전체 품목 리스트 조회 ...");
 		model.addAttribute("data", service.getItemList());
-		return "pages/item/itemList";
+		return "item/itemList";
 	}
 	
 	@GetMapping("/search")
@@ -41,7 +41,7 @@ public class ItemController {
 			@RequestParam("searchValue") String searchValue, Model model) {
 		log.info("[GET/Controller] 품목 검색 ...");
 		model.addAttribute("data", service.searchItem(searchType, searchValue));
-		return "pages/item/itemList";
+		return "item/itemList";
 	}
 
 }
