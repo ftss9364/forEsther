@@ -96,30 +96,30 @@
     <!-- // 대시보드 -->
 
     <!-- 재고관리 -->
-    <li class="menu-item active">
-      <a href="/item/list;" class="menu-link menu-toggle">
+    <li class="menu-item">
+      <a href="/item/list" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-layout"></i>
         <div data-i18n="Layouts">재고관리</div>
       </a>
 
       <ul class="menu-sub">
-        <li class="menu-item active">
+        <li class="menu-item">
           <a href="/item/list" class="menu-link">
             <div data-i18n="Without menu">품목관리</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="/item/list" class="menu-link">
+          <a href="/bom/list" class="menu-link">
             <div data-i18n="Without navbar">BOM관리</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="/item/listl" class="menu-link">
+          <a href="/serialLot/serialLotList" class="menu-link">
             <div data-i18n="Container">SERIAL LOT관리</div>
           </a>
         </li>
         <li class="menu-item">
-          <a href="/item/list" class="menu-link">
+          <a href="/unitPrice/unitPriceList" class="menu-link">
             <div data-i18n="Fluid">단가관리</div>
           </a>
         </li>
