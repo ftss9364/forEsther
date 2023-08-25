@@ -9,6 +9,7 @@ import com.forEsther.vo.itemvo.ItemVO;
 
 public interface BomService {
 	//public List<BomVO> getList();
+	public List<BomVO> getListOrigin();
 	public List<BomVO> getList(Criteria cri);
 	public List<BomRegistrationVO> getBomRegList();
 	public int getTotal();

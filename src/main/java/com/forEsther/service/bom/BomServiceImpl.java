@@ -30,6 +30,13 @@ public class BomServiceImpl implements BomService {
 //		
 //		return mapper.getList();
 //	}
+	@Override
+	public List<BomVO> getListOrigin() {
+		
+		log.info("getListOrigin----------------------------------");
+		
+		return mapper.getList();
+	}
 
 	@Override
 	public List<BomVO> getList(Criteria cri) {
